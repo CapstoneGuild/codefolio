@@ -1,5 +1,8 @@
 import { pool } from './database.js';
 import './dotenv.js';
+import hashtagData from '../data/hashtags.js';
+
+dotenv.config();
 
 //🧹 DROP All tables
 
@@ -291,26 +294,49 @@ const createPostHashtagsTable = async () => {
 
 
 
-/* 🌱 Seed all tables */
+/* 🌱 Seed tables */
 
-//Table 1 of 11 - Authorized Users
+//Table 2: Hashtags
+const seedHashtagsTable = async () => {
+    for (const hashtag of hashtagData) {
+        const insertQuery = `
+        INSERT INTO hashtags (tag_text, category)
+        VALUES ($1, $2)
+        `;
 
-//Table 2 of 11 - Profile Hashtags
+        const values = [
+            hashtag.tag_text,
+            hashtag.category
+        ];
 
-//Table 3 of 11 - Profiles
+        try {
+            await pool.query(insertQuery, values);
+            console.log(`Hashtag added successfully: ${hashtag.tag_text}!`);
+        } catch (err) {
+            console.error('Error inserting hashtag:', err);
+        }
+    }
+};
 
-//Table 4 of 11 - Posts
+//Reset function to drop, create, and seed tables in the correct order
+const resetDatabase = async () => {
+    await dropTables();
 
-//Table 5 of 11 - Projects
+    await createAuthUsersTable();
+    await createHashtagsTable();
+    await createProfilesTable();
+    await createPostsTable();
+    await createProjectsTable();
+    await createNetworkTable();
+    await createMessagesTable();
+    await createBookmarksTable();
+    await createCommentsTable();
+    await createProfileHashtagsTable();
+    await createPostHashtagsTable();
 
-//Table 6 of 11 - Network
+    await seedHashtagsTable();
 
-//Table 7 of 11 - Messages
+    console.log('🎉 Database reset complete!');
+}
 
-//Table 8 of 11 - Bookmarks
-
-//Table 9 of 11 - Comments
-
-//Table 1 of 11 - Profile Hashtags
-
-//Table 1 of 11 - Post Hashtags
+resetDatabase();

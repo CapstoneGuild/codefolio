@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "concurrently \"cd client && vite\" \"cd server && nodemon --require dotenv/config server.js\"",
+    "reset": "node config/reset.js",
+    "start": "npm run reset && node server/server.js",
+    "build": "cd client && vite build"
   },
   "keywords": [],
   "author": "",
