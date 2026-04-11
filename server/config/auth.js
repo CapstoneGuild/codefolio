@@ -1,14 +1,17 @@
-import passport from 'passport-github2'
+import passportGitHub from 'passport-github2'
+import './dotenv.js'
 import { pool } from './database.js'
+
+const GitHubStrategy = passportGitHub.Strategy
 
 const options = {
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: 'http://localhost:3001/auth/github/callback'
+    callbackURL: process.env.GITHUB_CALLBACK_URL || 'http://localhost:3001/auth/github/callback'
 }
 
 const verify = async (accessToken, refreshToken, profile, callback) => {
-    const { _json: { id, name, login, avatar_url} } = profile
+    const { _json: { id, login, avatar_url} } = profile
     const userData = {
         githubId: id,
         username: login,
@@ -26,10 +29,10 @@ const verify = async (accessToken, refreshToken, profile, callback) => {
                 VALUES ($1)
                 RETURNING *`,
                 [JSON.stringify({
-                    githubid: userData.githubId, 
+                    githubId: userData.githubId,
                     username: userData.username, 
-                    avatarurl: userData.avatarUrl,
-                    accesstoken: accessToken
+                    avatarUrl: userData.avatarUrl,
+                    accessToken: accessToken
                 })]
             )
 
