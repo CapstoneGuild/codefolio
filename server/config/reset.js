@@ -2,8 +2,6 @@ import { pool } from './database.js';
 import './dotenv.js';
 import hashtagData from '../data/hashtags.js';
 
-dotenv.config();
-
 //🧹 DROP All tables
 
 const dropTables = async () => {
