@@ -1,12 +1,12 @@
-import { pool } from './database.js';
 import './dotenv.js';
+import { pool } from './database.js';
 import hashtagData from '../data/hashtags.js';
 
 //🧹 DROP All tables
 
 const dropTables = async () => {
     const query =`
-    DROP TABLE IF EXISTS post_hashags;
+    DROP TABLE IF EXISTS post_hashtags;
     DROP TABLE IF EXISTS profile_hashtags;
     DROP TABLE IF EXISTS comments;
     DROP TABLE IF EXISTS bookmarks;
@@ -31,10 +31,10 @@ const dropTables = async () => {
 /* 🪄 Create all tables */
 
 //Table 1 of 11 - Authorized Users
-const createAuthUsersTable = async () => {
+const createUsersTable = async () => {
 
     const query = `
-        CREATE TABLE IF NOT EXISTS auth.users (
+        CREATE TABLE IF NOT EXISTS users (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             email TEXT UNIQUE,
             encrypted_password TEXT,
@@ -46,9 +46,9 @@ const createAuthUsersTable = async () => {
 
     try {
         await pool.query(query);
-        console.log('Auth users table created successfully');
+        console.log('Users table created successfully');
     } catch (err) {
-        console.error('Error creating auth users table:', err);
+        console.error('Error creating Users table:', err);
     }
 };
 
@@ -91,7 +91,8 @@ const createProfilesTable = async () => {
 
     const query = `
         CREATE TABLE IF NOT EXISTS profiles (
-            id UUID PRIMARY KEY REFERENCES auth.users(id),
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            user_id UUID REFERENCES users(id),
             username TEXT UNIQUE,
             bio TEXT,
             location TEXT,
@@ -210,8 +211,8 @@ const createBookmarksTable = async () => {
         CREATE TABLE IF NOT EXISTS bookmarks (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             profile_id UUID REFERENCES profiles(id),
-            post_id REFERENCES posts(id),
-            project_id REFERENCES projects(id),
+            post_id INTEGER REFERENCES posts(id),
+            project_id INTEGER REFERENCES projects(id),
             created_at TIMESTAMP DEFAULT now(),
             CHECK (
                 (post_id IS NOT NULL AND project_id IS NULL)
@@ -236,10 +237,10 @@ const createCommentsTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS comments (
             id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-            post_id UUID REFERENCES posts(id),
+            post_id INTEGER REFERENCES posts(id),
             profile_id UUID REFERENCES profiles(id),
             content TEXT,
-            created_at TIMESTAMP DEFAULT now()
+            created_at TIMESTAMP DEFAULT now(),
             UNIQUE (post_id, profile_id, content)
         );
     `;
@@ -277,7 +278,7 @@ const createPostHashtagsTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS post_hashtags (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            post_id UUID REFERENCES posts(id),
+            post_id INTEGER REFERENCES posts(id),
             hashtag_id UUID REFERENCES hashtags(id)
         );
     `;
@@ -296,23 +297,27 @@ const createPostHashtagsTable = async () => {
 
 //Table 2: Hashtags
 const seedHashtagsTable = async () => {
-    for (const hashtag of hashtagData) {
-        const insertQuery = `
-        INSERT INTO hashtags (tag_text, category)
-        VALUES ($1, $2)
-        `;
+    const client = await pool.connect();
 
-        const values = [
-            hashtag.tag_text,
-            hashtag.category
-        ];
+    try{
+        for (const hashtag of hashtagData) {
+            const insertQuery = `
+                INSERT INTO hashtags (tag_text, category)
+                VALUES ($1, $2)
+            `;
 
-        try {
-            await pool.query(insertQuery, values);
+            const values = [
+                hashtag.tag_text,
+                hashtag.category
+            ];
+
+            await client.query(insertQuery, values);
             console.log(`Hashtag added successfully: ${hashtag.tag_text}!`);
-        } catch (err) {
-            console.error('Error inserting hashtag:', err);
         }
+    } catch (err) {
+            console.error('Error inserting hashtag:', err);
+    } finally {
+        client.release();
     }
 };
 
@@ -320,7 +325,7 @@ const seedHashtagsTable = async () => {
 const resetDatabase = async () => {
     await dropTables();
 
-    await createAuthUsersTable();
+    await createUsersTable();
     await createHashtagsTable();
     await createProfilesTable();
     await createPostsTable();
@@ -335,6 +340,9 @@ const resetDatabase = async () => {
     await seedHashtagsTable();
 
     console.log('🎉 Database reset complete!');
+
+    //close all connections once scrip has run
+    await pool.end();
 }
 
 resetDatabase();

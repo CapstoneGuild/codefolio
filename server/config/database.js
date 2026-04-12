@@ -2,9 +2,9 @@ import pg from 'pg';
 
 const config = {
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    ssl: false //{
+    //  rejectUnauthorized: false
+    // }
 };
 
 export const pool = new pg.Pool(config);
