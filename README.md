@@ -136,4 +136,37 @@ Users can receive UI/UX or projefct feedback from others to improve the quality 
 
 ## Installation Instructions
 
-[instructions go here]
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/DevDominique/codefolio.git
+   cd CODEFOLIO
+   ```
+
+2. **Install dependencies**
+   ```bash
+   cd client
+   npm install
+   ```
+     ```bash
+   cd server
+   npm install
+   ```
+
+3. **Set up environment variables**
+- Server Directory
+   ```bash
+   touch .env
+   ```
+   
+   Add your keys for server dir:
+   ```env
+   DATABASE_URL=your_neon_url
+   CLIENT_URL=your_deployed_website_url
+   GITHUB_CLIENT_ID=your_github_client_id
+   GITHUB_CLIENT_SECRET=github_client_secret
+   ```
+
+4. **Run development server**
+   ```bash
+   npm run dev
+   ```
