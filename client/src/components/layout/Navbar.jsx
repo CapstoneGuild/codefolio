@@ -25,7 +25,7 @@ const Navbar = () => {
 
   return (
     <div className="w-full border-b border-border">
-      <div className="max-w-7xl mx-auto flex items-center justify-between h-25 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-9/10 mx-auto flex items-center justify-between h-25 px-4 sm:px-6 lg:px-8">
         
         {/* Left */}
         <div className='w-40 sm:w-52 lg:w-60'>

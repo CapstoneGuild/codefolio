@@ -11,9 +11,8 @@ const LeftSidebar = () => {
   const menu = [
     { text: 'Projects', icon: <ArticleIcon />, to: '/projects' },
     { text: 'Community', icon: <GroupsIcon />, to: '/community' },
-    { text: 'Profile', icon: <Person2Icon />, to: '/profile' },
-    { text: 'Bookmarks', icon: <BookmarkIcon />, to: '/bookmarks' },
     { text: 'Network', icon: <WifiTetheringIcon />, to: '/network' },
+    { text: 'Bookmarks', icon: <BookmarkIcon />, to: '/bookmarks' },
   ]
 
   return (
