@@ -9,7 +9,7 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="search-bar flex-1">
+    <div className="search-bar">
       <select name="" id="">
         <option value="projects">Projects</option>
         <option value="posts">Posts</option>

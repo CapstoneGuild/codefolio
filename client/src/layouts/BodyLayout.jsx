@@ -3,20 +3,21 @@ import RightSidebar from "../components/layout/RightSidebar"
 
 const BodyLayout = ({ element }) => {
   return (
-    <div className="flex">
+    <div className="flex flex-col gap-4 lg:flex-row">
       {/* Left Sidebar */}
-      <div className="w-60">
+      <aside className="hidden lg:block lg:w-60 shrink-0">
         <LeftSidebar />
-      </div>
+      </aside>
+
       {/* Main */}
-      <div className="flex-1">
+      <main className="w-full flex-1 min-w-0">
         {element}
-      </div>
+      </main>
 
       {/* Right Sidebar */}
-      <div className="w-60">
+      <aside className="hidden xl:block xl:w-60 shrink-0">
         <RightSidebar />
-      </div>
+      </aside>
     </div>
   )
 }

@@ -29,13 +29,13 @@ function App() {
 	])
 
 	return (
-		<div className="max-w-7xl mx-auto min-h-screen flex flex-col bg-app-bg dark:bg-app-bg">
-      <Navbar />
-      <main className="flex-1 p-4">
-        <BodyLayout element={element} />
-      </main>
-      <Footer />
-    </div>
+		<div className="min-h-screen flex flex-col bg-app-bg dark:bg-app-bg">
+			<Navbar />
+			<main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+				<BodyLayout element={element} />
+			</main>
+			<Footer />
+		</div>
 	)
 }
 

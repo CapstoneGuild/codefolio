@@ -24,22 +24,28 @@ const Navbar = () => {
     }, [theme])
 
   return (
-    <div className="flex justify-between h-20 p-4">
-      <div className='w-60'>
-        {theme === "light" 
+    <div className="w-full border-b border-border">
+      <div className="max-w-7xl mx-auto flex items-center justify-between h-25 px-4 sm:px-6 lg:px-8">
+        
+        {/* Left */}
+        <div className='w-40 sm:w-52 lg:w-60'>
+          {theme === "light" 
             ? <Link to="/"><img src={CodefolioDark} alt="Codefolio" className="w-10"/></Link>
             : <Link to="/"><img src={Codefolio} alt="Codefolio" className="w-10"/></Link>
-        }
-      </div>
-      {/* Search Component */}
-      <SearchBar />
+          }
+        </div>
 
-      <div className='w-60 flex flex-row items-center justify-end gap-4'>
-        <a onClick={() => setTheme((prev) => (prev === "light" ? "dark" : "light"))}>
-          {theme === "light" ? <DarkModeIcon /> : <LightModeOutlinedIcon />}
-        </a>
-        {/* Pass user's name initials or display profile */}
-        <div className='flex items-center justify-content-center'>
+        {/* Search */}
+        <div className="hidden md:block flex-1 max-w-md">
+          <SearchBar />
+        </div>
+
+        {/* Right */}
+        <div className='flex items-center justify-end gap-4 w-40 sm:w-52 lg:w-60'>
+          <button onClick={() => setTheme((prev) => (prev === "light" ? "dark" : "light"))}>
+            {theme === "light" ? <DarkModeIcon /> : <LightModeOutlinedIcon />}
+          </button>
+
           <Avatar className="bg-black">MA</Avatar>
         </div>
       </div>
