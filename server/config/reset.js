@@ -16,6 +16,7 @@ const dropTables = async () => {
     DROP TABLE IF EXISTS posts;
     DROP TABLE IF EXISTS profiles;
     DROP TABLE IF EXISTS hashtags;
+    DROP TABLE IF EXISTS users;
     DROP TABLE IF EXISTS auth.users;
     `;
 
@@ -39,6 +40,8 @@ const createUsersTable = async () => {
             email TEXT UNIQUE,
             encrypted_password TEXT,
             github_id TEXT UNIQUE,
+            username TEXT UNIQUE,
+            avatar_url TEXT,
             provider TEXT DEFAULT 'github',
             created_at TIMESTAMP DEFAULT now()
         );
@@ -93,10 +96,8 @@ const createProfilesTable = async () => {
         CREATE TABLE IF NOT EXISTS profiles (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id UUID REFERENCES users(id),
-            username TEXT UNIQUE,
             bio TEXT,
             location TEXT,
-            avatar_url TEXT,
             links TEXT,
             created_at TIMESTAMP DEFAULT now()
         );

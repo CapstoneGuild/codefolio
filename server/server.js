@@ -1,8 +1,8 @@
+import './config/dotenv.js'
 import express from 'express'
 import cors from 'cors'
 import passport from 'passport'
 import session from 'express-session'
-import './config/dotenv.js'
 import { GitHub } from './config/auth.js'
 import authRoutes from './routes/auth.js'
 
@@ -15,8 +15,6 @@ if (isProduction) {
     app.set('trust proxy', 1)
 }
 
-app.use(express.json())
-
 app.use(
     cors({
         origin: process.env.CLIENT_URL || 'http://localhost:5173',
@@ -24,9 +22,10 @@ app.use(
         credentials: true,
     })
 )
+app.use(express.json())
 
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'codepath-dev-secret',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -50,5 +49,5 @@ passport.deserializeUser((user, done) => {
 app.use('/auth', authRoutes)
 
 app.listen(PORT, () => {
-    console.log(`server running on http://localhost:${PORT}`)
+    console.log(`Server running on http://localhost:${PORT}`)
 })

@@ -20,20 +20,15 @@ const verify = async (accessToken, refreshToken, profile, callback) => {
     }
 
     try {
-        const results = await pool.query('SELECT * FROM users WHERE user_metadata->>\'username\' = $1', [userData.username])
+        const results = await pool.query('SELECT * FROM users WHERE username = $1', [userData.username])
         const user = results.rows[0]
 
         if (!user) {
             const newResults = await pool.query(
-                `INSERT INTO users (user_metadata)
-                VALUES ($1)
+                `INSERT INTO users (github_id, username, avatar_url)
+                VALUES ($1, $2, $3)
                 RETURNING *`,
-                [JSON.stringify({
-                    githubId: userData.githubId,
-                    username: userData.username, 
-                    avatarUrl: userData.avatarUrl,
-                    accessToken: accessToken
-                })]
+                [userData.githubId, userData.username, userData.avatarUrl]
             )
 
             const newUser = newResults.rows[0]
