@@ -46,7 +46,7 @@ const Navbar = () => {
             {theme === "light" ? <DarkModeIcon /> : <LightModeOutlinedIcon />}
           </button>
 
-          <Avatar className="bg-black">MA</Avatar>
+          <Link to="/profile"><Avatar className="bg-black">MA</Avatar></Link>
         </div>
       </div>
     </div>

@@ -62,6 +62,20 @@ html[data-theme="dark"] {
   select {
     background-color: var(--app-surface);
   }
+
+  button {
+    @apply cursor-pointer;
+    color: var(--app-surface);
+    background-color: var(--app-text);
+    border-radius: 20px;
+    padding: 0.5rem;
+  }
+
+  button:hover {
+    color: var(--app-primary);
+    background-color: var(--app-surface);
+    border: var(--app-border);
+  }
 }
 
 /* Components */

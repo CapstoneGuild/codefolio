@@ -9,7 +9,7 @@ import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
 
 const LeftSidebar = () => {
   const menu = [
-    { text: 'Projects', icon: <ArticleIcon />, to: '/projects' },
+    { text: 'Projects', icon: <ArticleIcon />, to: '/' },
     { text: 'Community', icon: <GroupsIcon />, to: '/community' },
     { text: 'Network', icon: <WifiTetheringIcon />, to: '/network' },
     { text: 'Bookmarks', icon: <BookmarkIcon />, to: '/bookmarks' },
