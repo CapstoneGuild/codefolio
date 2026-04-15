@@ -95,7 +95,7 @@ const createProfilesTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS profiles (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            user_id UUID REFERENCES users(id),
+            user_id UUID UNIQUE REFERENCES users(id) ON DELETE CASCADE,
             bio TEXT,
             location TEXT,
             links TEXT,
@@ -117,7 +117,7 @@ const createPostsTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS posts (
             id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-            profile_id UUID REFERENCES profiles(id),
+            profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
             title TEXT,
             description TEXT,
             media_url TEXT,
@@ -141,7 +141,7 @@ const createProjectsTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS projects (
             id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-            profile_id UUID REFERENCES profiles(id),
+            profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
             title TEXT,
             description TEXT,
             tech_stack TEXT,
@@ -168,10 +168,12 @@ const createNetworkTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS network (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            requester_id UUID REFERENCES profiles(id),
-            receiver_id UUID REFERENCES profiles(id),
-            status TEXT CHECK (status IN ('pending', 'accepted', 'rejected')),
-            created_at TIMESTAMP DEFAULT now()
+            requester_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+            receiver_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+            status TEXT NOT NULL CHECK (status IN ('pending', 'accepted', 'rejected')),
+            created_at TIMESTAMP DEFAULT now(),
+            CHECK (requester_id <> receiver_id),
+            UNIQUE (requester_id, receiver_id)
         );
     `;
 
@@ -189,8 +191,8 @@ const createMessagesTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS messages (
             id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-            sender_id UUID REFERENCES profiles(id),
-            receiver_id UUID REFERENCES profiles(id),
+            sender_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+            receiver_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
             status TEXT CHECK (status IN ('read', 'unread')),
             content TEXT,
             created_at TIMESTAMP DEFAULT now()
@@ -211,9 +213,9 @@ const createBookmarksTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS bookmarks (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            profile_id UUID REFERENCES profiles(id),
-            post_id INTEGER REFERENCES posts(id),
-            project_id INTEGER REFERENCES projects(id),
+            profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+            post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+            project_id INTEGER REFERENCES projects(id) ON DELETE CASCADE,
             created_at TIMESTAMP DEFAULT now(),
             CHECK (
                 (post_id IS NOT NULL AND project_id IS NULL)
@@ -238,8 +240,8 @@ const createCommentsTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS comments (
             id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-            post_id INTEGER REFERENCES posts(id),
-            profile_id UUID REFERENCES profiles(id),
+            post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+            profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
             content TEXT,
             created_at TIMESTAMP DEFAULT now(),
             UNIQUE (post_id, profile_id, content)
@@ -260,8 +262,8 @@ const createProfileHashtagsTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS profile_hashtags (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            profile_id UUID REFERENCES profiles(id),
-            hashtag_id UUID REFERENCES hashtags(id)
+            profile_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
+            hashtag_id UUID REFERENCES hashtags(id) ON DELETE CASCADE
         );
     `;
 
@@ -279,9 +281,14 @@ const createPostHashtagsTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS post_hashtags (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-            post_id INTEGER REFERENCES posts(id),
-            hashtag_id UUID REFERENCES hashtags(id)
+            post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+            hashtag_id UUID REFERENCES hashtags(id) ON DELETE CASCADE,
+            UNIQUE (post_id, hashtag_id)
         );
+
+        CREATE INDEX IF NOT EXISTS idx_post_hashtags_post_id ON post_hashtags(post_id);
+        CREATE INDEX IF NOT EXISTS idx_post_hashtags_hashtag_id ON post_hashtags(hashtag_id);
+        CREATE INDEX IF NOT EXISTS idx_hashtags_tag_text ON hashtags(tag_text);
     `;
 
     try {
