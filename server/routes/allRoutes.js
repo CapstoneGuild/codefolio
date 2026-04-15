@@ -1,9 +1,9 @@
 import express from "express";
-import isAuthenticated from "../middleware/authMiddleware";
-import projectController from "../controllers/projectController";
-import postController from "../controllers/postController";
-import profileController from "../controllers/profileController";
-import networkController from "../controllers/networkController";
+import isAuthenticated from "../middleware/authMiddleware.js";
+import projectController from "../controllers/projectController.js";
+import postController from "../controllers/postController.js";
+import profileController from "../controllers/profileController.js";
+import networkController from "../controllers/networkController.js";
 
 const router = express.Router();
 
