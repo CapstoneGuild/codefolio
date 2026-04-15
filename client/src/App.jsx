@@ -2,30 +2,35 @@ import { useRoutes } from "react-router"
 import BodyLayout from "./layouts/BodyLayout"
 import Navbar from "./components/layout/Navbar"
 import Footer from "./components/layout/Footer"
-import Home from "./pages/Home"
+import Projects from "./pages/Projects"
 import Login from "./pages/Login"
-import SignUp from "./pages/SignUp"
 import UserProfile from "./pages/UserProfile"
+import Community from "./pages/Community"
+import Network from "./pages/Network"
 
 function App() {
 
 	let element = useRoutes([
 		{
 			path: '/',
-			element: <Home />
+			element: <Projects />
 		},
 		{
 			path: '/login',
 			element: <Login />
 		},
 		{
-			path: '/signup',
-			element: <SignUp />
-		},
-		{
 			path: '/profile',
 			element: <UserProfile />
-		}
+		},
+		{
+			path: '/community',
+			element: <Community />
+		},
+		{
+			path: '/network',
+			element: <Network />
+		},
 	])
 
 	return (
