@@ -5,6 +5,7 @@ import passport from 'passport'
 import session from 'express-session'
 import { GitHub } from './config/auth.js'
 import authRoutes from './routes/auth.js'
+import allRoutes from './routes/allRoutes.js'
 
 const PORT = process.env.PORT || 3001
 const isProduction = process.env.NODE_ENV === 'production'
@@ -47,6 +48,7 @@ passport.deserializeUser((user, done) => {
 })
 
 app.use('/auth', authRoutes)
+app.use('/api', allRoutes)
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
