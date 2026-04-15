@@ -8,8 +8,8 @@ const Projects = () => {
         <h1 className="text-xl font-semibold">Projects</h1>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 justify-items-stretch">
+      <div className="flex-1 overflow-y-auto p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 justify-items-stretch">
           {[...Array(projects)].map((_, index) => (
             <ProjectCard key={index} />
           ))}

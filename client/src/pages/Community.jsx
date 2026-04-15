@@ -7,8 +7,8 @@ const Community = () => {
             <h1 className="text-xl font-semibold">Community</h1>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4">
-            <div className="flex flex-col gap-4 justify-items-stretch">
+        <div className="flex-1 overflow-y-auto px-8 py-4">
+            <div className="flex flex-col gap-8 justify-items-stretch">
                 {[...Array(posts)].map((_, index) => (
                     <PostCard key={index} />
                 ))}

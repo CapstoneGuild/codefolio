@@ -1,8 +1,8 @@
 const ProjectCard = () => {
     const techStack = ['React', 'JavaScript', 'Express']
     return (
-        <article className="bg-white rounded-xl border border-gray-200 shadow-sm w-full max-w-none hover:shadow-md transition duration-300">
-            <img  src="https://picsum.photos/640/360" alt="Project Thumbnail" className="w-full object-cover h-32 rounded-t-xl"/>
+        <article className="bg-white rounded-bl-4xl rounded-tr-4xl overflow-hidden border border-gray-200 shadow-sm w-full max-w-none hover:shadow-md transition duration-300">
+            <img  src="https://picsum.photos/640/360" alt="Project Thumbnail" className="w-full object-cover h-32"/>
             <div className="p-4">
             <div className="space-y-2">
                 <h1 className="text-base font-semibold text-gray-800 leading-tight"> BuildMySupra </h1>

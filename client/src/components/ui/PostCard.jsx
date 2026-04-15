@@ -8,7 +8,7 @@ const PostCard = () => {
     const hashtags = ['react', 'javascript', 'webdev']
 
     return (
-        <article className='w-full rounded-xl border border-gray-200 bg-white shadow-sm transition duration-300 hover:shadow-md'>
+        <article className='w-full rounded-tr-4xl rounded-bl-4xl border border-gray-200 bg-white shadow-sm transition duration-300 hover:shadow-md'>
             <div className='p-4'>
             <div className='flex items-center justify-between gap-3'>
                 <div className='flex items-center gap-2.5'>
