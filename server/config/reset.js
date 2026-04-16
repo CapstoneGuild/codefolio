@@ -99,7 +99,9 @@ const createProfilesTable = async () => {
             user_id UUID UNIQUE REFERENCES users(id) ON DELETE CASCADE,
             bio TEXT,
             location TEXT,
-            links TEXT,
+            github_url TEXT,
+            linkedin_url TEXT,
+            other_url TEXT,
             created_at TIMESTAMP DEFAULT now()
         );
     `;
