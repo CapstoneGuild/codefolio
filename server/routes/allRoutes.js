@@ -27,7 +27,7 @@ router.post('/network/requests', isAuthenticated, networkController.sendRequest)
 router.patch('/network/requests/:networkId/accept', isAuthenticated, networkController.acceptRequest);
 router.delete('/network/requests/:networkId/reject', isAuthenticated, networkController.rejectRequest);
 router.delete('/network/connections/:networkId', isAuthenticated, networkController.disconnectConnection);
-router.get('/network/requests', isAuthenticated, networkController.getPendingRequests);
+router.get('/network/requests/pending', isAuthenticated, networkController.getPendingRequests);
 router.get('/network/connections', isAuthenticated, networkController.getAllConnections);
 
 
