@@ -22,6 +22,7 @@ router.get('/hashtags/search', postController.searchHashtags);
 
 router.get('/profiles/:id', profileController.getProfile);
 router.post('/profiles', isAuthenticated, profileController.createProfile);
+router.patch('/profiles/:id', isAuthenticated, profileController.updateprofile);
 
 router.post('/network/requests', isAuthenticated, networkController.sendRequest);
 router.patch('/network/requests/:networkId/accept', isAuthenticated, networkController.acceptRequest);

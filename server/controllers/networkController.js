@@ -20,7 +20,9 @@ const getProfileCardByProfileId = async (profileId) => {
         `SELECT p.id,
                 p.bio,
                 p.location,
-                p.links,
+                p.github_url,
+                p.linkedin_url,
+                p.other_url,
                 u.username,
                 u.avatar_url
          FROM profiles p
@@ -256,7 +258,9 @@ const getPendingRequests = async (req, res) => {
                     n.requester_id,
                     p.bio AS requester_bio,
                     p.location AS requester_location,
-                    p.links AS requester_links,
+                    p.github_url AS requester_github_url,
+                    p.linkedin_url AS requester_linkedin_url,
+                    p.other_url AS requester_other_url,
                     u.username AS requester_username,
                     u.avatar_url AS requester_avatar_url,
                     n.created_at
@@ -285,7 +289,9 @@ const getPendingRequests = async (req, res) => {
                 avatar_url: request.requester_avatar_url,
                 bio: request.requester_bio,
                 location: request.requester_location,
-                links: request.requester_links,
+                github_url: request.requester_github_url,
+                linkedin_url: request.requester_linkedin_url,
+                other_url: request.requester_other_url,
             },
         }));
 
@@ -337,9 +343,17 @@ const getAllConnections = async (req, res) => {
                         ELSE pr.location
                     END AS other_location,
                     CASE
-                        WHEN n.requester_id = $1 THEN pr2.links
-                        ELSE pr.links
-                    END AS other_links,
+                        WHEN n.requester_id = $1 THEN pr2.github_url
+                        ELSE pr.github_url
+                    END AS other_github_url,
+                    CASE
+                        WHEN n.requester_id = $1 THEN pr2.linkedin_url
+                        ELSE pr.linkedin_url
+                    END AS other_linkedin_url,
+                    CASE
+                        WHEN n.requester_id = $1 THEN pr2.other_url
+                        ELSE pr.other_url
+                    END AS other_other_url,
                     CASE
                         WHEN n.requester_id = $1 THEN u2.username
                         ELSE u1.username
@@ -376,7 +390,9 @@ const getAllConnections = async (req, res) => {
                 avatar_url: connection.other_avatar_url,
                 bio: connection.other_bio,
                 location: connection.other_location,
-                links: connection.other_links,
+                github_url: connection.other_github_url,
+                linkedin_url: connection.other_linkedin_url,
+                other_url: connection.other_other_url,
             },
         }));
 
