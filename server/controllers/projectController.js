@@ -53,7 +53,7 @@ const getProjectById = async (req, res) => {
             FROM projects pr
             JOIN profiles p ON pr.profile_id = p.id
             LEFT JOIN users u ON p.user_id = u.id
-            WHERE pr.id = $1`, 
+            WHERE pr.id = $1`,
             [projectId]
         );
         if (project.rows.length === 0) {
@@ -64,13 +64,13 @@ const getProjectById = async (req, res) => {
         res.status(200).json({ ...projectData, owner: { username, avatar_url } });
     }
     catch (err) {
-        res.status(409).json({ message: 'Error fetching project', error: err.message });    
+        res.status(409).json({ message: 'Error fetching project', error: err.message });
     }
 }
 
 const createProject = async (req, res) => {
     const userId = req.user.id;
-    const {title, description, tech_stack, demo_url, collaborators, links, license, md_content, image_url} = req.body;
+    const {title, description, tech_stack, demo_url, collaborators, links, license, image_url} = req.body;
     try {
         const userProfile = await pool.query(`SELECT id from profiles WHERE user_id = $1`, [userId]);
         if (userProfile.rows.length === 0) {
@@ -78,10 +78,10 @@ const createProject = async (req, res) => {
         }
         const profileId = userProfile.rows[0].id;
         const newProject = await pool.query(`
-            INSERT INTO projects (profile_id, title, description, tech_stack, demo_url, collaborators, links, license, md_content, image_url)
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) 
-            RETURNING *`, 
-            [profileId, title, description, tech_stack, demo_url, collaborators, links, license, md_content, image_url ?? DEFAULT_PROJECT_IMAGE_URL]
+            INSERT INTO projects (profile_id, title, description, tech_stack, demo_url, collaborators, links, license, image_url)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            RETURNING *`,
+            [profileId, title, description, tech_stack, demo_url, collaborators, links, license, image_url ?? DEFAULT_PROJECT_IMAGE_URL]
         )
         res.status(201).json(newProject.rows[0]);
     }
@@ -93,19 +93,19 @@ const createProject = async (req, res) => {
 const updateProject = async (req, res) => {
     const userId = req.user.id;
     const projectId = req.params.id;
-    const {title, description, tech_stack, demo_url, collaborators, links, license, md_content, image_url} = req.body;
+    const {title, description, tech_stack, demo_url, collaborators, links, license, image_url} = req.body;
     try {
         const userProfile = await pool.query(`SELECT id from profiles WHERE user_id = $1`, [userId]);
         if (userProfile.rows.length === 0) {
             return res.status(404).json({ message: 'Profile not found for user' });
         }
         const profileId = userProfile.rows[0].id;
-        const updatedProject = await pool.query(`    
+        const updatedProject = await pool.query(`
             UPDATE projects
-            SET title = $1, description = $2, tech_stack = $3, demo_url = $4, collaborators = $5, links = $6, license = $7, md_content = $8, image_url = COALESCE($9, image_url)
-            WHERE id = $10 AND profile_id = $11
-            RETURNING *`, 
-            [title, description, tech_stack, demo_url, collaborators, links, license, md_content, image_url, projectId, profileId]
+            SET title = $1, description = $2, tech_stack = $3, demo_url = $4, collaborators = $5, links = $6, license = $7, image_url = COALESCE($8, image_url)
+            WHERE id = $9 AND profile_id = $10
+            RETURNING *`,
+            [title, description, tech_stack, demo_url, collaborators, links, license, image_url, projectId, profileId]
         )
 
         if (updatedProject.rows.length === 0) {
@@ -130,7 +130,7 @@ const deleteProject = async (req, res) => {
         const deletedProject = await pool.query(`
             DELETE FROM projects
             WHERE id = $1 AND profile_id = $2
-            RETURNING *`, 
+            RETURNING *`,
             [projectId, profileId]
         )
 
