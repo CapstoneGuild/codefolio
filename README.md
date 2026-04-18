@@ -44,7 +44,7 @@ The purpose of CodeFolio is to create a centralized platform where developers ca
 
 Users can create an account, log in securely, and access personalized features using OAuth authentication via GitHub
 
-[gif goes here]
+https://github.com/user-attachments/assets/79f95c7d-c524-4910-963e-95bb1bc24e8f
 
 ### [User Profile Creation]
 
@@ -52,13 +52,13 @@ Users can create and edit a developer profile that includes their bio, tech stac
 
 [gif goes here]
 
-### [Project Uploading]
+### [Create Project]
 
-Users can upload and manage projects by adding a title, description, images or GIFs, and external links such GitHub or live demos.
+Users can create and manage projects by adding a title, description, images or GIFs, and external links such GitHub or live demos.
 
 [gif goes here]
 
-### ✅ Project Feed
+### Project Feed
 
 Users and visitors can browse a feed of uploaded projects to discover work shared by other developers.
 
@@ -76,18 +76,6 @@ Users can search for projects by title or keyword to quickly find projefcts rela
 
 [gif goes here]
 
-### [Commenting on Projects]
-
-Logged-in users can comment on projects to ask questions, give feedback, or interact with other creators.
-
-[gif goes here]
-
-### ✅ CRUD Functionality
-
-Users can create, read, update, and delete their own profiles, projects post, and comments within the app.
-
-[gif goes here]
-
 ### [Like Projects]
 
 Users can like projects to show appreciation and increase engagement on the platform.
@@ -99,6 +87,18 @@ Users can like projects to show appreciation and increase engagement on the plat
 ### [Connection Requests]
 
 Users can send and receive connection requests to build their network and connect with other developers.
+
+[gif goes here]
+
+### [Create on Posts]
+
+Logged-in users can create on posts to ask questions, give feedback, or interact with other creators.
+
+[gif goes here]
+
+### [Commenting on Posts]
+
+Logged-in users can comment on posts to ask questions, give feedback, or interact with other creators.
 
 [gif goes here]
 
