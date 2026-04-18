@@ -48,11 +48,20 @@ const getAllProjects = async (req, res) => {
 const getProjectById = async (req, res) => {
     const projectId = req.params.id;
     try {
-        const project = await pool.query(`SELECT * FROM projects WHERE id = $1`, [projectId]);
+        const project = await pool.query(
+            `SELECT pr.*, u.username, u.avatar_url
+            FROM projects pr
+            JOIN profiles p ON pr.profile_id = p.id
+            LEFT JOIN users u ON p.user_id = u.id
+            WHERE pr.id = $1`, 
+            [projectId]
+        );
         if (project.rows.length === 0) {
             return res.status(404).json({ message: 'Project not found' });
         }
-        res.status(200).json(project.rows[0]);
+        const row = project.rows[0];
+        const { username, avatar_url, ...projectData } = row;
+        res.status(200).json({ ...projectData, owner: { username, avatar_url } });
     }
     catch (err) {
         res.status(409).json({ message: 'Error fetching project', error: err.message });    
