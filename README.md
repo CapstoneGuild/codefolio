@@ -38,9 +38,11 @@ The purpose of CodeFolio is to create a centralized platform where developers ca
 
 ## Features
 
-### [User Authentication]
+### Required Features (MVP)
 
-Users can create an account, log in securely, and access personalized features using authentication such as JWT or OAuth
+### ✅ User Authentication
+
+Users can create an account, log in securely, and access personalized features using OAuth authentication via GitHub
 
 [gif goes here]
 
@@ -56,7 +58,7 @@ Users can upload and manage projects by adding a title, description, images or G
 
 [gif goes here]
 
-### [Project Feed]
+### ✅ Project Feed
 
 Users and visitors can browse a feed of uploaded projects to discover work shared by other developers.
 
@@ -80,27 +82,23 @@ Logged-in users can comment on projects to ask questions, give feedback, or inte
 
 [gif goes here]
 
-### [CRUD Functionality]
+### ✅ CRUD Functionality
 
 Users can create, read, update, and delete their own profiles, projects post, and comments within the app.
-
-[gif goes here]
-
-### [Connection Requests]
-
-Users can send and receive connection requests to build their network and connect with other developers.
-
-[gif goes here]
-
-### [Project Filtering by Category or Tag]
-
-Users can filter projects by categories such as web development, mobile apps, data science or game development.
 
 [gif goes here]
 
 ### [Like Projects]
 
 Users can like projects to show appreciation and increase engagement on the platform.
+
+[gif goes here]
+
+### Stretch Features (Nice-to-Have)
+
+### [Connection Requests]
+
+Users can send and receive connection requests to build their network and connect with other developers.
 
 [gif goes here]
 
@@ -119,12 +117,6 @@ Users can receive notifications for actions such as new connection requests, acc
 ### [Map-Based Location Display]
 
 Users can display their state or country using a map API to make profiles more interactive and location aware.
-
-[gif goes here]
-
-### [Collaboration Discovery]
-
-Users can discover and connect with developers based on shared interests, goals, or project types for easier collaboration.
 
 [gif goes here]
 
