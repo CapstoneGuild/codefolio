@@ -27,7 +27,7 @@ const Projects = () => {
   if (error) return <p>{error}</p>
   
   return (
-   <div className="h-full flex flex-col bg-surface rounded-lg">
+   <div className="flex flex-col bg-surface rounded-lg">
       <div className="px-8 py-4">
         <h1 className="heading-md">Projects</h1>
       </div>
