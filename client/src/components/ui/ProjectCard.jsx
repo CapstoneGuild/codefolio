@@ -70,7 +70,7 @@ const ProjectCard = ({ project }) => {
 			>
 				<Fade in={open}>
 					<Box sx={style}>
-						<ProjectModal project={project} />
+						<ProjectModal project={project} links={linkArray} />
 					</Box>
 				</Fade>
 			</Modal>

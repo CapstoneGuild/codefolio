@@ -6,3 +6,10 @@ export const parseCommaList = (value) => {
 
     return value.split(',').map(item => item.trim()).filter(Boolean)
 }
+
+export const formatDate = (value) => {
+    const myDate = new Date(value)
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+    
+    return myDate.toLocaleDateString('en-US', options)
+}

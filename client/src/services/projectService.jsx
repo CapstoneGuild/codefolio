@@ -2,9 +2,9 @@ import { createAPIInstance, API_BASE_URL } from './api.jsx'
 
 const project = createAPIInstance(`${API_BASE_URL}/api/projects`)
 
-const getAllProjects = async () => {
+const getAllProjects = async (limit = 20, offset = 0) => {
     try {
-        const response = await project.get('/')
+        const response = await project.get(`/?limit=${limit}&offset=${offset}`)
         return response.data
     } catch (err) {
         throw new Error(err.response?.data?.message || 'Unable to fetch projects')
