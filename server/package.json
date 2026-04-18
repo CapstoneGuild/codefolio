@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
     "reset": "node config/reset.js",
+    "migrate": "node config/migrate.js",
+    "migrate:status": "node config/migrate.js --status",
     "start": "npm run reset && node server/server.js",
     "build": "cd client && vite build"
   },

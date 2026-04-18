@@ -20,7 +20,17 @@ const createProfile = async (profileData) => {
     }
 }
 
+const updateProfile = async (id, profileData) => {
+    try {
+        const response = await profile.patch(`/${id}`, profileData)
+        return response.data
+    } catch (err) {
+        throw new Error(err.response?.data?.message || 'Unable to update profile')
+    }
+}
+
 export default {
     getProfile,
-    createProfile
+    createProfile,
+    updateProfile
 }

@@ -170,3 +170,28 @@ Users can receive UI/UX or projefct feedback from others to improve the quality 
    ```bash
    npm run dev
    ```
+
+## Database Migrations
+
+Use migrations for schema updates so existing data is preserved.
+
+From the `server` directory:
+
+1. Check migration status
+   ```bash
+   npm run migrate:status
+   ```
+
+2. Run pending migrations
+   ```bash
+   npm run migrate
+   ```
+
+3. Use reset only when you want to drop and recreate all tables
+   ```bash
+   npm run reset
+   ```
+
+Notes:
+- `npm run migrate` applies each migration file once and records it in `schema_migrations`.
+- `npm run reset` is destructive and should only be used for local clean rebuilds.

@@ -1,6 +1,7 @@
 import './dotenv.js';
 import { pool } from './database.js';
 import hashtagData from '../data/hashtags.js';
+import { DEFAULT_PROJECT_IMAGE_URL } from '../utils/constants.js';
 
 //🧹 DROP All tables
 
@@ -98,7 +99,9 @@ const createProfilesTable = async () => {
             user_id UUID UNIQUE REFERENCES users(id) ON DELETE CASCADE,
             bio TEXT,
             location TEXT,
-            links TEXT,
+            github_url TEXT,
+            linkedin_url TEXT,
+            other_url TEXT,
             created_at TIMESTAMP DEFAULT now()
         );
     `;
@@ -150,6 +153,7 @@ const createProjectsTable = async () => {
             links TEXT,
             license TEXT,
             md_content TEXT,
+            image_url TEXT DEFAULT '${DEFAULT_PROJECT_IMAGE_URL}',
             created_at TIMESTAMP DEFAULT now()
         );
     `;
@@ -331,6 +335,8 @@ const seedHashtagsTable = async () => {
 
 //Reset function to drop, create, and seed tables in the correct order
 const resetDatabase = async () => {
+    console.warn('Warning: reset drops and recreates all tables.');
+
     await dropTables();
 
     await createUsersTable();

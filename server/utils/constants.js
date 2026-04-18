@@ -11,5 +11,6 @@ export const POSTS_DEFAULT_LIMIT = 20;
 export const POSTS_MAX_LIMIT = 100;
 export const PROJECTS_DEFAULT_LIMIT = 20;
 export const PROJECTS_MAX_LIMIT = 100;
+export const DEFAULT_PROJECT_IMAGE_URL = 'https://placehold.co/600x400?text=Project+Image';
 export const NETWORK_DEFAULT_LIMIT = 20;
 export const NETWORK_MAX_LIMIT = 100;
