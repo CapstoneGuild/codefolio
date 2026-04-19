@@ -43,12 +43,10 @@ html[data-theme="dark"] {
 @layer base {
   html {
     font-family: var(--font-sans);
-    background-color: var(--app-bg);
-    color: var(--app-text);
   }
 
   body {
-    background-color: var(--app-bg);
+    /* background-color: var(--app-bg); */
     color: var(--app-text);
   }
 
