@@ -1,3 +1,5 @@
+//Note: This placeholder needs to be updated to pass project as prop to Project card component.
+
 import ProjectCard from "../components/ui/ProjectCard"
 
 const Projects = () => {
