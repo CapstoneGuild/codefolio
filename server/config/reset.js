@@ -152,7 +152,6 @@ const createProjectsTable = async () => {
             collaborators TEXT,
             links TEXT,
             license TEXT,
-            md_content TEXT,
             image_url TEXT DEFAULT '${DEFAULT_PROJECT_IMAGE_URL}',
             created_at TIMESTAMP DEFAULT now()
         );
