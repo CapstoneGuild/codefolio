@@ -3,14 +3,14 @@ import RightSidebar from "../components/layout/RightSidebar"
 
 const BodyLayout = ({ element }) => {
   return (
-    <div className="flex flex-col gap-4 lg:flex-row">
+    <div className="flex flex-col gap-4 min-h-full items-stretch lg:flex-row">
       {/* Left Sidebar */}
       <aside className="hidden lg:block lg:w-56 shrink-0">
         <LeftSidebar />
       </aside>
 
       {/* Main */}
-      <main className="w-full flex-1 min-w-0">
+      <main className="w-full flex-1 min-w-0 min-h-full">
         {element}
       </main>
 
