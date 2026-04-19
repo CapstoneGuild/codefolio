@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import {createProject } from '../services/projectService.jsx';
+import {createProject } from '../../services/projectService.jsx';
+import { notifyError, notifySuccess } from '../../utils/notifications.js';
 
 const CreateProject = () => {
     const [project, setproject] = useState({
@@ -9,7 +10,8 @@ const CreateProject = () => {
         demo_url: '',
         collaborators: '',
         links: '',
-        license: ''
+        license: '',
+        image_url: ''
     });
 
     //handle form inputs
@@ -25,6 +27,7 @@ const CreateProject = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        //send prject data to backend
         const newProject = {
             ...project,
             title: project.title,
@@ -33,7 +36,8 @@ const CreateProject = () => {
             demo_url: project.demo_url,
             collaborators: project.collaborators,
             links: project.links,
-            license: project.license
+            license: project.license,
+            image_url: project.image_url
         };
 
         try {
@@ -41,10 +45,10 @@ const CreateProject = () => {
 
             if (!response || !response.ok) {
                 const errorData = await response.json();
-                alert(errorData.error || 'Uh-oh, something went wrong.');
+                notifyError(errorData.error || 'Uh-oh, something went wrong.');
                 return;
             }
-            alert('Project added successfully!');
+            notifySuccess('Project added successfully!');
 
             //Reset form after successful submission
             setproject({
@@ -54,7 +58,8 @@ const CreateProject = () => {
                 demo_url: '',
                 collaborators: '',
                 links: '',
-                license: ''
+                license: '',
+                image_url: ''
             });
 
         } catch (error) {
@@ -62,8 +67,6 @@ const CreateProject = () => {
             alert("Server error while adding project. Please try again.");
         }
     };
-
-
 
 
     return (
@@ -93,7 +96,7 @@ const CreateProject = () => {
                         onChange={handleChange}
                         required
                     />
-                    <label>Project Tech Stack:</label>
+                    <label>Project Tech Stack: Enter each technology separated by a comma</label>
                     <input
                         type='text'
                         id='tech_stack'
@@ -102,14 +105,13 @@ const CreateProject = () => {
                         onChange={handleChange}
                         required
                     />
-                    <label>Image or Video Demo URL:</label>
+                    <label>GIF or Video Demonstration URL:</label>
                     <input
                         type='text'
                         id='demo_url'
                         name='demo_url'
                         value={project.demo_url}
                         onChange={handleChange}
-                        required
                     />
                     <label>Collaborators:</label>
                     <input
@@ -119,7 +121,7 @@ const CreateProject = () => {
                         value={project.collaborators}
                         onChange={handleChange}
                     />
-                    <label>Links:</label>
+                    <label>Relevant Links: Enter each link separated by a comma</label>
                     <input
                         type='text'
                         id='links'
@@ -133,6 +135,14 @@ const CreateProject = () => {
                         id='license'
                         name='license'
                         value={project.license}
+                        onChange={handleChange}
+                    />
+                    <label>Project Image URL:</label>
+                    <input
+                        type='text'
+                        id='image_url'
+                        name='image_url'
+                        value={project.image_url}
                         onChange={handleChange}
                     />
                 </form>

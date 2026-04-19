@@ -78,6 +78,10 @@ function App() {
 					element: <Projects />
 				},
 				{
+					path: 'projects/:id',
+					element: <ProjectDetails />
+				},
+				{
 					path: 'profile',
 					element: <UserProfile />
 				},
