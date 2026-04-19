@@ -38,11 +38,13 @@ The purpose of CodeFolio is to create a centralized platform where developers ca
 
 ## Features
 
-### [User Authentication]
+### Required Features (MVP)
 
-Users can create an account, log in securely, and access personalized features using authentication such as JWT or OAuth
+### ✅ User Authentication
 
-[gif goes here]
+Users can create an account, log in securely, and access personalized features using OAuth authentication via GitHub
+
+https://github.com/user-attachments/assets/79f95c7d-c524-4910-963e-95bb1bc24e8f
 
 ### [User Profile Creation]
 
@@ -50,23 +52,23 @@ Users can create and edit a developer profile that includes their bio, tech stac
 
 [gif goes here]
 
-### [Project Uploading]
+### [Create Project]
 
-Users can upload and manage projects by adding a title, description, images or GIFs, and external links such GitHub or live demos.
+Users can create and manage projects by adding a title, description, images or GIFs, and external links such GitHub or live demos.
 
 [gif goes here]
 
-### [Project Feed]
+### Project Feed
 
 Users and visitors can browse a feed of uploaded projects to discover work shared by other developers.
 
-[gif goes here]
+<img src="milestones/images/projects.png" alt="Projects">
 
 ### [Project Detail Page]
 
 Users can click on a project to view more detailed information, including the project description, walthrough visuals, and related links.
 
-[gif goes here]
+<img src="milestones/images/project_details.gif" alt="Projects">
 
 ### [Search Functionality]
 
@@ -74,17 +76,13 @@ Users can search for projects by title or keyword to quickly find projefcts rela
 
 [gif goes here]
 
-### [Commenting on Projects]
+### [Like Projects]
 
-Logged-in users can comment on projects to ask questions, give feedback, or interact with other creators.
-
-[gif goes here]
-
-### [CRUD Functionality]
-
-Users can create, read, update, and delete their own profiles, projects post, and comments within the app.
+Users can like projects to show appreciation and increase engagement on the platform.
 
 [gif goes here]
+
+### Stretch Features (Nice-to-Have)
 
 ### [Connection Requests]
 
@@ -92,15 +90,15 @@ Users can send and receive connection requests to build their network and connec
 
 [gif goes here]
 
-### [Project Filtering by Category or Tag]
+### [Create on Posts]
 
-Users can filter projects by categories such as web development, mobile apps, data science or game development.
+Logged-in users can create on posts to ask questions, give feedback, or interact with other creators.
 
 [gif goes here]
 
-### [Like Projects]
+### [Commenting on Posts]
 
-Users can like projects to show appreciation and increase engagement on the platform.
+Logged-in users can comment on posts to ask questions, give feedback, or interact with other creators.
 
 [gif goes here]
 
@@ -119,12 +117,6 @@ Users can receive notifications for actions such as new connection requests, acc
 ### [Map-Based Location Display]
 
 Users can display their state or country using a map API to make profiles more interactive and location aware.
-
-[gif goes here]
-
-### [Collaboration Discovery]
-
-Users can discover and connect with developers based on shared interests, goals, or project types for easier collaboration.
 
 [gif goes here]
 
