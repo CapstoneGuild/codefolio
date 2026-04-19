@@ -62,13 +62,13 @@ Users can create and manage projects by adding a title, description, images or G
 
 Users and visitors can browse a feed of uploaded projects to discover work shared by other developers.
 
-[gif goes here]
+<img src="milestones/images/projects.png" alt="Projects">
 
 ### [Project Detail Page]
 
 Users can click on a project to view more detailed information, including the project description, walthrough visuals, and related links.
 
-[gif goes here]
+<img src="milestones/images/project_details.gif" alt="Projects">
 
 ### [Search Functionality]
 
