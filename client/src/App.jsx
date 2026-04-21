@@ -77,10 +77,10 @@ function App() {
 					index: true,
 					element: <Projects />
 				},
-				{
-					path: 'projects/:id',
-					element: <ProjectDetails />
-				},
+				// {
+				// 	path: 'projects/:id',
+				// 	element: <ProjectDetails />
+				// },
 				{
 					path: 'profile',
 					element: <UserProfile />

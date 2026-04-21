@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Avatar } from '@mui/material';
+import AccountMenu from '../ui/AccountMenu';
+import useAuthSession from '../../hooks/useAuthSession';
 
 // Components
 import SearchBar from '../ui/SearchBar';
@@ -14,14 +16,17 @@ import Codefolio from '../../assets/logo/codefolio.svg'
 import CodefolioDark from '../../assets/logo/codefolio-dark.svg'
 
 const Navbar = () => {
-    const [theme, setTheme] = useState(() => {
-        return localStorage.getItem("theme") || "light"
-    })
+  const navigate = useNavigate()
+  const { user } = useAuthSession()
 
-    useEffect(() => {
-        localStorage.setItem("theme", theme);
-        document.documentElement.setAttribute("data-theme", theme)
-    }, [theme])
+  const [theme, setTheme] = useState(() => {
+      return localStorage.getItem("theme") || "light"
+  })
+
+  useEffect(() => {
+      localStorage.setItem("theme", theme);
+      document.documentElement.setAttribute("data-theme", theme)
+  }, [theme])
 
   return (
     <div className="w-full border-b border-border">
@@ -45,8 +50,7 @@ const Navbar = () => {
           <button onClick={() => setTheme((prev) => (prev === "light" ? "dark" : "light"))}>
             {theme === "light" ? <DarkModeIcon /> : <LightModeOutlinedIcon />}
           </button>
-
-          <Link to="/profile"><Avatar className="bg-black">MA</Avatar></Link>
+          <AccountMenu user={user} navigate={navigate}/>
         </div>
       </div>
     </div>
