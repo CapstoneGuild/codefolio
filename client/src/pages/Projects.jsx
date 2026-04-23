@@ -60,12 +60,8 @@ const Projects = () => {
   
   return (
    <div className="flex flex-col rounded-lg h-full">
-      <div className="px-8 pb-4">
-        <h1 className="heading-md">Projects</h1>
-      </div>
-
-      <div className="flex-1 px-8 py-2 min-w-0 h-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-stretch">
+      <div className="flex-1 px-8 min-w-0 h-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-stretch auto-rows-fr">
           {projects.map((project) => (
             <Link
               key={project.id}

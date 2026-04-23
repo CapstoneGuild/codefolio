@@ -77,6 +77,10 @@ function App() {
 			children: [
 				{
 					index: true,
+					element: <Navigate to="/projects" replace/>
+				},
+				{
+					path: "projects",
 					element: <Projects />
 				},
 				{

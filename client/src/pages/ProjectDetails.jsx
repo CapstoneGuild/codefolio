@@ -130,7 +130,7 @@ const ProjectDetails = () => {
 								<h2 className="heading-lg text-primary">{project.title}</h2>
 								{/* conditional rendering of edit button only for project owner */}
 								{user.username === owner.username && (
-									<Tooltip title="Edit project" arrow>
+									<Tooltip title="Edit Project" arrow>
 										<button onClick={() => setOpenEdit(true)} className="bg-transparent text-app">
 											<EditDocumentIcon fontSize="medium"/>
 										</button>
@@ -140,7 +140,9 @@ const ProjectDetails = () => {
 							<span className="caption">{formatDate(project.created_at)}</span>
 						</div>
             <div className="hover:scale-110">
-              <RouterLink to={`/profile/${owner.username}`}><Avatar src={owner.avatar_url}></Avatar></RouterLink>
+              <Tooltip title={owner.username} arrow>
+              	<RouterLink to={`/profile/${owner.username}`}><Avatar src={owner.avatar_url}></Avatar></RouterLink>
+							</Tooltip>		
             </div>
           </div>
   
