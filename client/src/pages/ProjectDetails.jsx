@@ -30,6 +30,8 @@ import Breadcrumbs from "@mui/material/Breadcrumbs"
 import Typography from "@mui/material/Typography"
 import Link from "@mui/material/Link"
 import HomeIcon from "@mui/icons-material/Home"
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -133,6 +135,14 @@ const ProjectDetails = () => {
 									<Tooltip title="Edit Project" arrow>
 										<button onClick={() => setOpenEdit(true)} className="bg-transparent text-app">
 											<EditDocumentIcon fontSize="medium"/>
+										</button>
+									</Tooltip>
+								)}
+								{user.username !== owner.username && (
+									<Tooltip title="Bookmark" arrow>
+										{/* Add onClick function, insert row to bookmarks table */}
+										<button className="bg-transparent text-app">
+											<BookmarkBorderIcon fontSize="medium"/>
 										</button>
 									</Tooltip>
 								)}
