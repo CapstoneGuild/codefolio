@@ -8,6 +8,8 @@ import Login from "./pages/Login"
 import UserProfile from "./pages/UserProfile"
 import Community from "./pages/Community"
 import Network from "./pages/Network"
+import ProjectDetails from "./pages/ProjectDetails"
+import EditProject from "./pages/EditProject"
 import useAuthSession from "./hooks/useAuthSession"
 import LoadingSpinner from "./components/ui/LoadingSpinner"
 import NotificationProvider from "./components/ui/NotificationProvider"
@@ -77,10 +79,10 @@ function App() {
 					index: true,
 					element: <Projects />
 				},
-				// {
-				// 	path: 'projects/:id',
-				// 	element: <ProjectDetails />
-				// },
+				{
+					path: "projects/:id",
+					element: <ProjectDetails />,
+				},
 				{
 					path: 'profile',
 					element: <UserProfile />

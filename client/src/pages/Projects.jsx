@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import ProjectCard from "../components/ui/ProjectCard"
 import projectService from '../services/projectService'
 import LoadingSpinner from "../components/ui/LoadingSpinner"
@@ -66,7 +67,12 @@ const Projects = () => {
       <div className="flex-1 px-8 py-2 min-w-0 h-full">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-stretch">
           {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <Link
+              key={project.id}
+              to={`/projects/${project.id}`}
+            >
+              <ProjectCard key={project.id} project={project} />
+            </Link>
           ))}
         </div>
       </div>
