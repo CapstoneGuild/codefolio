@@ -16,7 +16,7 @@ import GlobalModal from "../components/ui/GlobalModal.jsx";
 
 // Utilities
 import { buildmarkdown } from '../utils/buildMarkdown.js'
-import { formatDate, parseCommaList } from "../utils/format"
+import { formatDate, parseCommaList, formatLink } from "../utils/format"
 
 // Icons
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
@@ -32,11 +32,14 @@ import Link from "@mui/material/Link"
 import HomeIcon from "@mui/icons-material/Home"
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import LaunchIcon from '@mui/icons-material/Launch';
+import IosShareIcon from '@mui/icons-material/IosShare';
 
 const ProjectDetails = () => {
   const { id } = useParams();
 	const { user } = useAuthSession()
   const [copied, setCopied] = useState(false)
+  const [urlCopied, setUrlCopied] = useState(false)
 
   //initialize the project
   const [owner, setOwner] = useState([])
@@ -47,6 +50,19 @@ const ProjectDetails = () => {
 
 	// Edit Project modal
 	const [openEdit, setOpenEdit] = useState(false)
+
+  const handleCopyProjectLink = async (projectId) => {
+    const projectUrl = `${window.location.origin}/projects/${projectId}`
+
+    try {
+      await navigator.clipboard.writeText(projectUrl)
+      setUrlCopied(true)
+      setTimeout(() => setUrlCopied(false), 2000)
+    } catch (err) {
+      console.error("Failed to copy link:", err)
+      setUrlCopied(false)
+    }
+  }
 
   useEffect(() => {    
     const fetchProjectById = async () => {
@@ -99,7 +115,8 @@ const ProjectDetails = () => {
             <ZoomImage alt={project.title} src={project.image_url} />
           )}
           <div className="absolute bottom-4 right-6">
-            {/* Copy Button */}
+            <div className="flex flex-row gap-2 items-center justify-center">
+              {/* Copy Button */}
 							<CopyToClipboard
 								text={markdown}
 								onCopy={() => {
@@ -122,6 +139,22 @@ const ProjectDetails = () => {
 									</button>	
 								</Tooltip>
 							</CopyToClipboard>
+              <Tooltip title="Share Project" arrow>
+                <button 
+                  disabled={urlCopied}
+                  onClick={() => handleCopyProjectLink(project.id)} 
+                  className={`flex items-center gap-1 px-4 caption
+                    ${urlCopied ? "opacity-60 cursor-not-allowed" : "bg-surface text-primary hover:text-surface hover:bg-app"}
+                  `}
+                >
+                  {urlCopied ? (
+                    <> <CheckIcon fontSize="small" /> </>
+                  ) : (
+                    <> <IosShareIcon fontSize="small" /> </>
+                  )}
+                </button>	
+              </Tooltip>
+            </div>
           </div>
         </div>
         <div className="py-6">
@@ -174,7 +207,14 @@ const ProjectDetails = () => {
           {project.demo_url && (
             <div className="my-4">
               <h2 className="heading-sm text-muted">Demo</h2>
-              <a href={project.demo_url} className="body-lg">{project.demo_url}</a>
+              <a 
+                href={formatLink(project.demo_url)} 
+                className="body-lg underline text-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {project.demo_url} <LaunchIcon fontSize="small"/>
+              </a>
             </div>
           )}
 
