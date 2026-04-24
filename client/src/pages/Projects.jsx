@@ -78,7 +78,7 @@ const Projects = () => {
         <button
           onClick={handlePrevious}
           disabled={offset === 0}
-          className="px-4 py-2 border rounded disabled:opacity-50"
+          className="max-w-24 w-24 px-4 py-2 border rounded disabled:opacity-50"
         >
           Previous
         </button>
@@ -90,7 +90,7 @@ const Projects = () => {
         <button
           onClick={handleNext}
           disabled={!hasMore}
-          className="px-4 py-2 border rounded disabled:opacity-50"
+          className="maxw-24 w-24 px-4 py-2 border rounded disabled:opacity-50"
         >
           Next
         </button>

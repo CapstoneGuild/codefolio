@@ -81,7 +81,7 @@ const ProjectDetails = () => {
 
   return (
     <>
-      <div className="w-full h-full bg-app-bg overflow-hidden max-w-none text-app px-8">
+      <div className="w-full h-full bg-app-bg overflow-hidden max-w-none text-app md:px-8">
 				<div className="mb-2 block lg:hidden shrink-0"> 
 					<Breadcrumbs aria-label="breadcrumb" className="text-sm text-app-muted">
 						<Link component={RouterLink} to="/" className="text-primary flex items-center gap-1">
@@ -166,7 +166,7 @@ const ProjectDetails = () => {
           <div className="my-4">
             <h2 className="heading-sm text-muted">Tech Stack</h2>
             <div className="flex flex-wrap gap-2 mt-4 [&_span]:body-lg">
-              {renderBadges(project.tech_stack)}
+              {renderBadges(project.tech_stack, null)}
             </div>
           </div>
 
@@ -183,7 +183,7 @@ const ProjectDetails = () => {
             <div className="my-4">
               <h2 className="heading-sm text-muted">Collaborators</h2>
               <div className="flex flex-wrap gap-2 mt-4 [&_span]:body-lg">
-                {renderBadges(project.collaborators)}
+                {renderBadges(project.collaborators, null)}
               </div>
             </div>
           )}
