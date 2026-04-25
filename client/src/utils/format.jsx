@@ -13,3 +13,10 @@ export const formatDate = (value) => {
     
     return myDate.toLocaleDateString('en-US', options)
 }
+
+export const formatLink = (url) => {
+    if (!url) return ""
+    return url.startsWith("http://") || url.startsWith("https://")
+        ? url
+        : `https://${url}`
+}

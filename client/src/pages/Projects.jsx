@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import ProjectCard from "../components/ui/ProjectCard"
 import projectService from '../services/projectService'
 import LoadingSpinner from "../components/ui/LoadingSpinner"
@@ -59,14 +60,15 @@ const Projects = () => {
   
   return (
    <div className="flex flex-col rounded-lg h-full">
-      <div className="px-8 pb-4">
-        <h1 className="heading-md">Projects</h1>
-      </div>
-
-      <div className="flex-1 px-8 py-2 min-w-0 h-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-stretch">
+      <div className="flex-1 px-8 min-w-0 h-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-stretch auto-rows-fr">
           {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <Link
+              key={project.id}
+              to={`/projects/${project.id}`}
+            >
+              <ProjectCard key={project.id} project={project} />
+            </Link>
           ))}
         </div>
       </div>
@@ -76,7 +78,7 @@ const Projects = () => {
         <button
           onClick={handlePrevious}
           disabled={offset === 0}
-          className="px-4 py-2 border rounded disabled:opacity-50"
+          className="max-w-24 w-24 px-4 py-2 border rounded disabled:opacity-50"
         >
           Previous
         </button>
@@ -88,7 +90,7 @@ const Projects = () => {
         <button
           onClick={handleNext}
           disabled={!hasMore}
-          className="px-4 py-2 border rounded disabled:opacity-50"
+          className="maxw-24 w-24 px-4 py-2 border rounded disabled:opacity-50"
         >
           Next
         </button>
