@@ -84,23 +84,18 @@ Users can like projects to show appreciation and increase engagement on the plat
 
 ### Stretch Features (Nice-to-Have)
 
-### [Connection Requests]
+### ✅ Connection Requests
 
 Users can send and receive connection requests to build their network and connect with other developers.
 
-[gif goes here]
+https://github.com/user-attachments/assets/e2f90fd6-5d04-4114-a7e5-158985ca42b7
 
-### [Create on Posts]
+### ✅ Create on Posts && Commenting on Posts
 
 Logged-in users can create on posts to ask questions, give feedback, or interact with other creators.
-
-[gif goes here]
-
-### [Commenting on Posts]
-
 Logged-in users can comment on posts to ask questions, give feedback, or interact with other creators.
 
-[gif goes here]
+https://github.com/user-attachments/assets/98040874-eb20-4a0e-8178-52a0d08fde7e
 
 ### [Bookmark or Save Projects]
 
@@ -111,12 +106,6 @@ Users can save projects they are interested in so they can revisit them later.
 ### [Notifications]
 
 Users can receive notifications for actions such as new connection requests, accepted requests, or comments on their projects.
-
-[gif goes here]
-
-### [Map-Based Location Display]
-
-Users can display their state or country using a map API to make profiles more interactive and location aware.
 
 [gif goes here]
 
