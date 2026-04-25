@@ -85,16 +85,20 @@ export default function AccountMenu({ user, navigate }) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem component={Link} to={`/profile/${user.id}`}>
-          <Avatar /> Profile
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleLogout} >
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        {user?.id && (
+          <>
+            <MenuItem component={Link} to={`/profile/${user.id}`}>
+              <Avatar /> Profile
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleLogout} >
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </>
+        )}
       </Menu>
     </div>
   )
