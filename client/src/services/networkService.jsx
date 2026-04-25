@@ -47,10 +47,30 @@ const getPendingRequests = async () => {
     }
 }
 
+const removeConnection = async (networkId) => {
+    try {
+        const response = await network.delete(`/connections/${networkId}`)
+        return response.data
+    } catch (err) {
+        throw new Error(err.response?.data?.message || 'Unable to delete connection')
+    }
+}
+
+const getSuggestedProfiles = async () => {
+    try {
+        const response = await network.get('/suggestedprofiles')
+        return response.data
+    } catch (err) {
+        throw new Error(err.response?.data?.message || 'Unable to fetch suggested profiles')
+    }
+}
+
 export {
     sendConnectionRequest,
     acceptConnectionRequest,
     rejectConnectionRequest,
     getConnections,
-    getPendingRequests
+    getPendingRequests,
+    removeConnection,
+    getSuggestedProfiles
 }  

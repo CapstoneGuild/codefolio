@@ -414,11 +414,85 @@ const getAllConnections = async (req, res) => {
     }
 }
 
+const getSuggestedProfiles = async (req, res) => {
+    const userId = req.user.id;
+    const parsedLimit = Number.parseInt(req.query.limit, 10);
+    const parsedOffset = Number.parseInt(req.query.offset, 10);
+    const limit = Number.isNaN(parsedLimit)
+        ? NETWORK_DEFAULT_LIMIT
+        : Math.min(Math.max(parsedLimit, 1), NETWORK_MAX_LIMIT);
+    const offset = Number.isNaN(parsedOffset) ? 0 : Math.max(parsedOffset, 0);
+
+    try {
+        const profileId = await getProfileIdByUserId(userId);
+        if (!profileId) {
+            return res.status(404).json({ message: 'Profile not found' });
+        }
+
+        const profiles = await pool.query(
+            `SELECT p.*, u.username, u.avatar_url
+            FROM profiles p
+            JOIN users u ON p.user_id = u.id
+            WHERE p.id <> $1
+            AND NOT EXISTS (
+                SELECT 1
+                FROM network n
+                WHERE 
+                    n.status IN ('pending', 'accepted')
+                    AND (
+                    (n.requester_id = $1 AND n.receiver_id = p.id)
+                    OR
+                    (n.receiver_id = $1 AND n.requester_id = p.id)
+                    )
+            )
+            ORDER BY p.created_at DESC
+            LIMIT $2 OFFSET $3`,
+            [profileId, limit, offset]
+        )
+
+        const totalCountResult = await pool.query(
+            `SELECT COUNT(*)::int AS total_count
+            FROM profiles p
+            JOIN users u ON p.user_id = u.id
+            WHERE p.id <> $1
+            AND NOT EXISTS (
+                SELECT 1
+                FROM network n
+                WHERE 
+                    n.status IN ('pending', 'accepted')
+                    AND (
+                    (n.requester_id = $1 AND n.receiver_id = p.id)
+                    OR
+                    (n.receiver_id = $1 AND n.requester_id = p.id)
+                    )
+            )`,
+            [profileId]
+        );
+
+        const totalCount = totalCountResult.rows[0].total_count;
+        const hasMore = offset + profiles.length < totalCount;
+
+        res.status(200).json({
+            profiles: profiles.rows,
+            pagination: {
+                totalCount,
+                limit,
+                offset,
+                hasMore,
+            },
+        });
+
+    } catch (err) {
+        res.status(500).json({ message: "Unable to fetch suggested profiles", error: err.message })
+    }
+}
+
 export default {
     sendRequest,
     acceptRequest,
     rejectRequest,
     disconnectConnection,
     getPendingRequests,
-    getAllConnections
+    getAllConnections,
+    getSuggestedProfiles
 };
