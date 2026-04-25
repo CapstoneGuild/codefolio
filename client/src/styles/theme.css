@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* Constants */
 @theme {
@@ -21,7 +22,7 @@
   --app-muted: #cbcdd0;
 
   --app-text: #0f172a;
-  --app-text-muted: #64748b;
+  --app-text-muted: #5f6c7f;
 
   --app-border: #e2e8f0;
   --app-primary: oklch(0.6221 0.1844 276.52);
@@ -74,6 +75,17 @@ html[data-theme="dark"] {
     background-color: var(--app-surface);
     border: var(--app-border);
   }
+
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
 }
 
 /* Components */
@@ -96,17 +108,17 @@ html[data-theme="dark"] {
 
   .body-lg {
     @apply text-lg leading-relaxed;
-    color: var(--app-text-muted);
+    color: var(--app-text);
   }
 
   .body-md {
     @apply text-base;
-    color: var(--app-text-muted);
+    color: var(--app-text);
   }
 
   .body-sm {
     @apply text-sm;
-    color: var(--app-text-muted);
+    color: var(--app-text);
   }
 
   .caption {

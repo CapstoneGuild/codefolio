@@ -1,45 +1,63 @@
 /*Utility function to build markdown template from 'CreateProject' form input and helper functions to format the markdown content.*/
 
 export function buildmarkdown(project) {
-    return `
-${project.image_url ? `<p align="center"><img src="${project.image_url}" alt="Project Image" width="600" style="max-width: 100%; height: auto;" /></p>`: ""}
+    const demoSection = project.demo_url
+    ? `## Demonstration
+- [Live Demo](${project.demo_url})`
+    : `## Demonstration
+N/A`;
 
-# ${project.title}
+    return `# ${project.title || "Untitled Project"}
 
-**${project.description}**
-
-
-## Demonstration
-${project.demo_url}
-
+**${project.description || "No description provided."}**
 
 ## Tech Stack
-${formatTechStack(project.tech_stack)}
+${formatTechStack(project.tech_stack) || "N/A"}
 
+${demoSection}
 
 ## Collaborators
-${project.collaborators}
-
+${formatCollaborators(project.collaborators) || "N/A"}
 
 ## Links
-${formatLinks(project.links)}
-
+${formatLinks(project.links) || "N/A"}
 
 ## License
-${project.license}
-
-    `;
-};
+${project.license || "N/A"}
+`
+}
 
 // formats links from comma-separated list to md bullets
 function formatLinks(linkString) {
     if (!linkString) return "";
 
-    return linkString
+    const links = linkString
         .split(",")
         .map(link => link.trim())
-        .filter(link => link.length > 0)
-        .map(link => `- ${link}`)
+        .filter(Boolean);
+
+    return links
+    .map((link, index) => {
+        if (link.includes("github")) return `- [GitHub](${link})`;
+
+        if (link.includes("vercel") || link.includes("netlify") || link.includes(".com")) {
+            return `- [Live Demo](${link})`;
+        }
+
+        return `- [Link](${link})`;
+    })
+    .join("\n");
+}
+
+// formats collaborators from comma-separated list to md bullets
+function formatCollaborators(collaboratorsString) {
+    if (!collaboratorsString) return "";
+
+    return collaboratorsString
+        .split(",")
+        .map(user => user.trim())
+        .filter(user => user.length > 0)
+        .map(user => `- ${user}`)
         .join("\n");
 };
 

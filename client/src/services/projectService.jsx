@@ -11,7 +11,7 @@ const getAllProjects = async (limit = 20, offset = 0) => {
     }
 }
 
-const getProjectById = async (id) => {
+export const getProjectById = async (id) => {
     try {
         const response = await project.get(`/${id}`)
         return response.data

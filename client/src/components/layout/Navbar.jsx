@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import AccountMenu from '../ui/AccountMenu';
 import useAuthSession from '../../hooks/useAuthSession';
