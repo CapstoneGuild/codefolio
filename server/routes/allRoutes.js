@@ -30,6 +30,6 @@ router.delete('/network/requests/:networkId/reject', isAuthenticated, networkCon
 router.delete('/network/connections/:networkId', isAuthenticated, networkController.disconnectConnection);
 router.get('/network/requests/pending', isAuthenticated, networkController.getPendingRequests);
 router.get('/network/connections', isAuthenticated, networkController.getAllConnections);
-
+router.get('/network/suggestedprofiles', isAuthenticated, networkController.getSuggestedProfiles)
 
 export default router;
