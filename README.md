@@ -88,7 +88,9 @@ Users can like projects to show appreciation and increase engagement on the plat
 
 Users can send and receive connection requests to build their network and connect with other developers.
 
-[gif goes here]
+https://github.com/user-attachments/assets/e2f90fd6-5d04-4114-a7e5-158985ca42b7
+
+
 
 ### [Create on Posts]
 
