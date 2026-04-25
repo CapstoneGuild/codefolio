@@ -6,7 +6,7 @@ const api = createAPIInstance(`${API_BASE_URL}/api`)
 const getAllPosts = async () => {
     try {
         const response = await post.get('/')
-        return response.data
+        return response.data.posts
     } catch (err) {
         throw new Error(err.response?.data?.message || 'Unable to fetch posts')
     }
