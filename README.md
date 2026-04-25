@@ -5,7 +5,7 @@ CodePath WEB103 Final Project
 Designed and developed by:
 - Mercy Akinyemi
 - Dominique Wilson
-- Irene Gallini 
+- Irene Gallini
 - Mycah Accad
 
 🔗 Link to deployed app:
@@ -26,15 +26,23 @@ The purpose of CodeFolio is to create a centralized platform where developers ca
 - We were inspired by the desire to collaborate with others, showcase our work, and create more opportunities for internships and jobs.
 
 ## Tech Stack
-- Frontend
-    * React JS
-    * Vanilla or TailwindCSS
-    * HTML
 
-- Backend
-    * DB - PostgreSQL
-    * Neon
-    * Express
+### Frontend
+
+![React](https://img.shields.io/badge/React-3f49a4?style=for-the-badge&logo=react&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3f49a4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-3f49a4?style=for-the-badge&logo=html5&logoColor=white)
+
+### Backend
+
+![Express.js](https://img.shields.io/badge/Express.js-3f49a4?style=for-the-badge&logo=express&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-3f49a4?style=for-the-badge&logo=nodedotjs&logoColor=white)
+
+### Database
+
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-3f49a4?style=for-the-badge&logo=postgresql&logoColor=white)
+![Neon](https://img.shields.io/badge/Neon-3f49a4?style=for-the-badge&logo=database&logoColor=white)
+
 
 ## Features
 
@@ -90,7 +98,7 @@ Users can send and receive connection requests to build their network and connec
 
 https://github.com/user-attachments/assets/e2f90fd6-5d04-4114-a7e5-158985ca42b7
 
-### ✅ Create on Posts && Commenting on Posts
+### ✅ Create Posts & Comment on Posts
 
 Logged-in users can create on posts to ask questions, give feedback, or interact with other creators.
 Logged-in users can comment on posts to ask questions, give feedback, or interact with other creators.
@@ -138,7 +146,7 @@ Users can receive UI/UX or projefct feedback from others to improve the quality 
    ```bash
    touch .env
    ```
-   
+
    Add your keys for server dir:
    ```env
    DATABASE_URL=your_neon_url
@@ -176,3 +184,14 @@ From the `server` directory:
 Notes:
 - `npm run migrate` applies each migration file once and records it in `schema_migrations`.
 - `npm run reset` is destructive and should only be used for local clean rebuilds.
+
+
+## License
+
+Copyright 2026 CapstoneGuild
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
