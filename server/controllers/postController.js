@@ -24,9 +24,18 @@ const getAllPosts = async (req, res) => {
 
     try {
         const posts = await pool.query(
-            `SELECT *
-             FROM posts
-             ORDER BY created_at DESC
+            `SELECT p.*, u.username, u.avatar_url,
+                    COALESCE(
+                        array_agg(h.tag_text) FILTER (WHERE h.tag_text IS NOT NULL),
+                        '{}'
+                    ) AS hashtags
+             FROM posts p
+             JOIN profiles pr ON p.profile_id = pr.id
+             LEFT JOIN users u ON pr.user_id = u.id
+             LEFT JOIN post_hashtags ph ON ph.post_id = p.id
+             LEFT JOIN hashtags h ON h.id = ph.hashtag_id
+             GROUP BY p.id, u.username, u.avatar_url
+             ORDER BY p.created_at DESC
              LIMIT $1 OFFSET $2`,
             [limit, offset]
         );
