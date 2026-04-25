@@ -6,6 +6,9 @@ import BodyLayout from "./layouts/BodyLayout"
 import Projects from "./pages/Projects"
 import Login from "./pages/Login"
 import UserProfile from "./pages/UserProfile"
+import AboutTab from "./components/user-profile/AboutTab";
+import ProjectsTab from "./components/user-profile/ProjectsTab";
+import BookmarksTab from "./components/user-profile/BookmarksTab";
 import Community from "./pages/Community"
 import Network from "./pages/Network"
 import useAuthSession from "./hooks/useAuthSession"
@@ -82,8 +85,20 @@ function App() {
 				// 	element: <ProjectDetails />
 				// },
 				{
-					path: 'profile',
-					element: <UserProfile />
+					path: 'profile/:id',
+					element: <UserProfile />,
+					children: [
+						{
+							index: true,
+							element: <AboutTab />
+						},
+						{
+							path: 'projects', element: <ProjectsTab />
+						},
+						{
+							path: 'bookmarks', element: <BookmarksTab />
+						}
+					]
 				},
 				{
 					path: 'community',

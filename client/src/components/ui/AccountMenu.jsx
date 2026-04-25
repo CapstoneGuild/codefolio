@@ -41,8 +41,8 @@ export default function AccountMenu({ user, navigate }) {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
             sx={{ margin: 0, padding: 0 }}
-          > 
-            {user && user.avatar_url !== null 
+          >
+            {user && user.avatar_url !== null
               ? <Avatar src={user.avatar_url}></Avatar>
               : <Avatar>{user.username.charAt(0).toUpperCase()}</Avatar>
             }
@@ -85,7 +85,7 @@ export default function AccountMenu({ user, navigate }) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem component={Link} to="/profile">
+        <MenuItem component={Link} to={`/profile/${user.id}`}>
           <Avatar /> Profile
         </MenuItem>
         <Divider />
