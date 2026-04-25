@@ -47,7 +47,7 @@ const getPendingRequests = async () => {
     }
 }
 
-export default {
+export {
     sendConnectionRequest,
     acceptConnectionRequest,
     rejectConnectionRequest,
