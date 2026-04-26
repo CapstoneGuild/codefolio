@@ -5,7 +5,7 @@ CodePath WEB103 Final Project
 Designed and developed by:
 - Mercy Akinyemi
 - Dominique Wilson
-- Irene Gallini 
+- Irene Gallini
 - Mycah Accad
 
 🔗 Link to deployed app:
@@ -50,7 +50,7 @@ https://github.com/user-attachments/assets/79f95c7d-c524-4910-963e-95bb1bc24e8f
 
 Users can create and edit a developer profile that includes their bio, tech stack, location, and social links.
 
-[gif goes here]
+<img src="milestones/images/createProfile.gif" alt="Create Profile GIF">
 
 ### [Create Project]
 
@@ -149,7 +149,7 @@ Users can receive UI/UX or projefct feedback from others to improve the quality 
    ```bash
    touch .env
    ```
-   
+
    Add your keys for server dir:
    ```env
    DATABASE_URL=your_neon_url
