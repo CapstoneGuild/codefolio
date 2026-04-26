@@ -34,8 +34,9 @@ const verify = async (accessToken, refreshToken, profile, callback) => {
             const newUser = newResults.rows[0]
 
             await pool.query(
-                `INSERT INTO profiles (id)
-                VALUES ($1)`,
+                `INSERT INTO profiles (user_id, is_complete)
+                VALUES ($1, false)
+                ON CONFLICT (user_id) DO NOTHING`,
                 [newUser.id]
             );
 

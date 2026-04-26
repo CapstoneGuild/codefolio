@@ -21,6 +21,7 @@ router.post('/posts/:id/comments', isAuthenticated, postController.addComment);
 router.get('/posts/:id/comments', postController.getPostComments);
 router.get('/hashtags/search', postController.searchHashtags);
 
+router.get('/profiles/user/:user_id', profileController.getProfileByUserId);
 router.get('/profiles/:id', profileController.getProfile);
 router.post('/profiles', isAuthenticated, profileController.createProfile);
 router.patch('/profiles/:id', isAuthenticated, profileController.updateprofile);
