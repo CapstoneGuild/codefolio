@@ -5,6 +5,7 @@ import Footer from "./components/layout/Footer"
 import BodyLayout from "./layouts/BodyLayout"
 import Projects from "./pages/Projects"
 import Login from "./pages/Login"
+import CreateProfile from "./pages/CreateProfile"
 import UserProfile from "./pages/UserProfile"
 import AboutTab from "./components/user-profile/AboutTab";
 import ProjectsTab from "./components/user-profile/ProjectsTab";
@@ -89,6 +90,10 @@ function App() {
 				{
 					path: "projects/:id",
 					element: <ProjectDetails />,
+				},
+				{
+					path: 'profile/:id/create',
+					element: <CreateProfile />
 				},
 				{
 					path: 'profile/:id',
