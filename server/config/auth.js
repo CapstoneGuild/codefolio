@@ -32,8 +32,16 @@ const verify = async (accessToken, refreshToken, profile, callback) => {
             )
 
             const newUser = newResults.rows[0]
+
+            await pool.query(
+                `INSERT INTO profiles (user_id)
+                VALUES ($1)`,
+                [newUser.id]
+            );
+
             return callback(null, newUser)
         }
+
         return callback(null, user)
     }
     catch(error) {
