@@ -6,6 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 // Service
 import { getProjectById } from '../services/projectService'
 import useAuthSession from "../hooks/useAuthSession.jsx";
+import bookmarkService from "../services/bookmarkService.jsx";
 
 // Components
 import LoadingSpinner from '../components/ui/LoadingSpinner';
@@ -38,6 +39,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 const ProjectDetails = () => {
   const { id } = useParams();
 	const { user } = useAuthSession()
+  const userId = user?.id;
   const [copied, setCopied] = useState(false)
   const [urlCopied, setUrlCopied] = useState(false)
 
@@ -50,6 +52,37 @@ const ProjectDetails = () => {
 
 	// Edit Project modal
 	const [openEdit, setOpenEdit] = useState(false)
+
+  //Bookmark state
+  const [isSaving, setIsSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [bookmarkId, setBookmarkId] = useState(null);
+
+  const handleBookmark = async () => {
+    try {
+      setIsSaving(true);
+
+      if (!saved) {
+        const newBookmark = await bookmarkService.createBookmark({
+          projectId: project.id,
+          postId: null
+        });
+
+        setSaved(true);
+        setBookmarkId(newBookmark.bookmark.id);
+
+      } else {
+        await bookmarkService.deleteBookmark(bookmarkId);
+        setSaved(false);
+        setBookmarkId(null);
+      }
+
+    } catch (err) {
+      console.error("Error saving bookmark:", err);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const handleCopyProjectLink = async (projectId) => {
     const projectUrl = `${window.location.origin}/projects/${projectId}`
@@ -64,7 +97,7 @@ const ProjectDetails = () => {
     }
   }
 
-  useEffect(() => {    
+  useEffect(() => {
     const fetchProjectById = async () => {
       try {
         const data = await getProjectById(id);
@@ -83,6 +116,27 @@ const ProjectDetails = () => {
     fetchProjectById();
   }, [id]);
 
+  useEffect(() => {
+    if (!project) return;
+
+    const checkBookmark = async () => {
+      try {
+        const bookmarks = await bookmarkService.getBookmarksByUser(userId);
+
+        const existing = bookmarks.find(b => b.project_id === project.id);
+
+        if (existing) {
+          setSaved(true);
+          setBookmarkId(existing.bookmark_id);
+        }
+      } catch (err) {
+        console.error("Error checking bookmark: ", err);
+      }
+    };
+
+    checkBookmark();
+  }, [userId, project]);
+
   if (loading) return (
     <div className="w-full h-full flex items-center justify-center bg-app-bg overflow-hidden max-w-none text-app">
       <LoadingSpinner />
@@ -98,7 +152,7 @@ const ProjectDetails = () => {
   return (
     <>
       <div className="w-full h-full bg-surface px-6 py-4 rounded-xl overflow-hidden max-w-none text-app md:px-8 md:py-6">
-				<div className="mb-2 block lg:hidden shrink-0"> 
+				<div className="mb-2 block lg:hidden shrink-0">
 					<Breadcrumbs aria-label="breadcrumb" className="text-sm text-app-muted">
 						<Link component={RouterLink} to="/" className="text-primary flex items-center gap-1">
 							<HomeIcon fontSize="small" />
@@ -136,13 +190,13 @@ const ProjectDetails = () => {
 										) : (
 											<> <ContentCopyIcon fontSize="small" /> Markdown </>
 										)}
-									</button>	
+									</button>
 								</Tooltip>
 							</CopyToClipboard>
               <Tooltip title="Share Project" arrow>
-                <button 
+                <button
                   disabled={urlCopied}
-                  onClick={() => handleCopyProjectLink(project.id)} 
+                  onClick={() => handleCopyProjectLink(project.id)}
                   className={`flex items-center gap-1 px-4 caption
                     ${urlCopied ? "opacity-60 cursor-not-allowed" : "bg-surface text-primary hover:text-surface hover:bg-app"}
                   `}
@@ -152,7 +206,7 @@ const ProjectDetails = () => {
                   ) : (
                     <> <IosShareIcon fontSize="small" /> </>
                   )}
-                </button>	
+                </button>
               </Tooltip>
             </div>
           </div>
@@ -174,8 +228,12 @@ const ProjectDetails = () => {
 								{user.username !== owner.username && (
 									<Tooltip title="Bookmark" arrow>
 										{/* Add onClick function, insert row to bookmarks table */}
-										<button className="bg-transparent text-app">
-											<BookmarkBorderIcon fontSize="medium"/>
+										<button onClick={handleBookmark} disabled={isSaving} className="bg-transparent text-app">
+                      {saved ? (
+                        <BookmarkIcon fontSize="medium"/>
+                      ) : (
+                        <BookmarkBorderIcon fontSize="medium"/>
+                      )}
 										</button>
 									</Tooltip>
 								)}
@@ -185,10 +243,10 @@ const ProjectDetails = () => {
             <div className="hover:scale-110">
               <Tooltip title={owner.username} arrow>
               	<RouterLink to={`/profile/${project.profile_id}`}><Avatar src={owner.avatar_url}></Avatar></RouterLink>
-							</Tooltip>		
+							</Tooltip>
             </div>
           </div>
-  
+
           {/* Description */}
           <div className="mt-4">
             <h2 className="heading-sm text-muted">Description</h2>
@@ -207,8 +265,8 @@ const ProjectDetails = () => {
           {project.demo_url && (
             <div className="mt-4">
               <h2 className="heading-sm text-muted">Demo</h2>
-              <a 
-                href={formatLink(project.demo_url)} 
+              <a
+                href={formatLink(project.demo_url)}
                 className="body-lg underline text-primary"
                 target="_blank"
                 rel="noopener noreferrer"

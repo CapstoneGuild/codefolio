@@ -144,6 +144,9 @@ function App() {
 						{
 							path: 'projects', element: <ProjectsTab />
 						},
+						{
+							path: 'bookmarks', element: <BookmarksTab />
+						}
 					]
 				},
 				{
