@@ -18,6 +18,7 @@ import LoadingSpinner from "../components/ui/LoadingSpinner"
 // Utilities
 import { getStatusData } from "../utils/status"
 import { notifySuccess, notifyError } from "../utils/notifications.js"
+import { formatLink } from "../utils/format.jsx"
 
 // Icons
 import Avatar from "@mui/material/Avatar"
@@ -143,9 +144,9 @@ const Network = () => {
   )
 
 	return (
-		<div className="lg:px-8">
+		<>
 			{/* Badges: Connections, Requests, Find */}
-			<div className="flex flex-row gap-4">
+			<div className="flex flex-col md:flex-row gap-4">
 				{tabs.map(tab => {
 					const count = connectionData[tab.key]?.count || 0
 					const showCount = tab.key === "accepted" || tab.key === "pending"
@@ -179,21 +180,29 @@ const Network = () => {
 			{/* Accepted Connections */}
 			{activeTab === "accepted" && (
 				<div className="bg-surface text-app p-4 rounded-xl mt-4">
-					<div className="flex flex-col gap-2">
-						{connectionData.accepted.items.length > 0 ? connectionData.accepted.items.map((user) => (
-							<div key={user.id} className="flex flex-row items-center justify-between px-2">
-								{/* Profile */}
-								<Link to={`/profile/${user.other_profile.username}`} className="flex flex-row gap-4 items-center">
-									<Avatar src={user.other_profile.avatar_url} />
-									<div className="flex flex-col items-start">
-										<span>{user.other_profile.username}</span>
-										<span className="caption">{user.other_profile.location}</span>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+						{connectionData && connectionData.accepted.items.length > 0 ? connectionData.accepted.items.map((user) => (
+							<div key={user.id} className="flex flex-row items-center justify-between px-6 py-4 rounded-xl border border-muted">
+								<div className="flex flex-row gap-8 items-center justify-between">
+									{/* Profile */}
+									<div className="flex-1 min-w-48">
+										<Link to={`/profile/${user.other_profile.id}`} className="flex flex-row gap-4 items-center">
+											<Avatar src={user.other_profile.avatar_url} />
+											<div className="flex flex-col items-start">
+												<span>{user.other_profile.username}</span>
+												{user.other_profile.location && (
+													<span className="caption">{user.other_profile.location}</span>
+												)}
+											</div>
+										</Link>
 									</div>
-								</Link>
-								{/* Social Links */}
-								<div className="flex flex-row gap-4 [&_a]:hover:scale-110">
-									<a href={user.other_profile.github_url} target="_blank" rel="nofollow"><GitHubIcon /></a>
-									<a href={user.other_profile.linkedin_url} target="_blank" rel="nofollow"><LinkedInIcon /></a>
+									{/* Social Links */}
+									<div className="hidden md:block">
+										<div className="flex flex-row gap-4 [&_a]:hover:scale-110">
+											<a href={formatLink(user.other_profile.github_url)} target="_blank" rel="nofollow"><GitHubIcon /></a>
+											<a href={formatLink(user.other_profile.linkedin_url)} target="_blank" rel="nofollow"><LinkedInIcon /></a>
+										</div>
+									</div>
 								</div>
 								{/* Remove Connection */}
 								<div onClick={() => handleRemoveConnection(user.id)}>
@@ -204,9 +213,11 @@ const Network = () => {
 							</div>
 							))
 							:
-							<div className="flex flex-col items-center justify-center gap-4 p-6">
-								<EmojiPeopleIcon sx={{ fontSize: "4rem"}}/>
-								<span>No connections found.</span>
+							<div className="col-span-full">
+								<div className="flex flex-col items-center justify-center gap-4 p-6">
+									<EmojiPeopleIcon sx={{ fontSize: "4rem"}}/>
+									<span>No connections found.</span>
+								</div>
 							</div>
 						}
 					</div>
@@ -215,21 +226,29 @@ const Network = () => {
 			{/* Pending Requests */}
 			{activeTab === "pending" && (
 				<div className="bg-surface text-app p-4 rounded-xl mt-4">
-					<div className="flex flex-col gap-2">
-						{connectionData.pending.items.length > 0 ? connectionData.pending.items.map((user) => (
-							<div key={user.id} className="flex flex-row items-center justify-between px-2">
-								{/* Profile */}
-								<Link to={`/profile/${user.requester_profile.username}`} className="flex flex-row gap-4 items-center">
-									<Avatar src={user.requester_profile.avatar_url} />
-									<div className="flex flex-col items-start">
-										<span>{user.requester_profile.username}</span>
-										<span className="caption">{user.requester_profile.location}</span>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+						{connectionData && connectionData.pending.items.length > 0 ? connectionData.pending.items.map((user) => (
+							<div key={user.id} className="flex flex-row items-center justify-between px-6 py-4 rounded-xl border border-muted">
+								<div className="flex flex-row gap-8 items-center">
+									{/* Profile */}
+									<div className="flex-1 min-w-48">
+										<Link to={`/profile/${user.requester_profile.id}`} className="flex flex-row gap-4 items-center">
+											<Avatar src={user.requester_profile.avatar_url} />
+											<div className="flex flex-col items-start">
+												<span>{user.requester_profile.username}</span>
+												{user.requester_profile.location && (
+													<span className="caption">{user.requester_profile.location}</span>
+												)}
+											</div>
+										</Link>
 									</div>
-								</Link>
-								{/* Social Links */}
-								<div className="flex flex-row gap-4 [&_a]:hover:scale-110">
-									<a href={user.requester_profile.github_url} target="_blank" rel="nofollow"><GitHubIcon /></a>
-									<a href={user.requester_profile.linkedin_url} target="_blank" rel="nofollow"><LinkedInIcon /></a>
+									{/* Social Links */}
+									<div className="hidden md:block">
+										<div className="flex flex-row gap-4 [&_a]:hover:scale-110">
+											<a href={formatLink(user.requester_profile.github_url)} target="_blank" rel="nofollow"><GitHubIcon /></a>
+											<a href={formatLink(user.requester_profile.linkedin_url)} target="_blank" rel="nofollow"><LinkedInIcon /></a>
+										</div>
+									</div>
 								</div>
 								{/* Accept or Decline Connection */}
 								<div className="flex flex-row gap-4">
@@ -243,9 +262,11 @@ const Network = () => {
 							</div>
 							))
 							:
-							<div className="flex flex-col items-center justify-center gap-4 p-6">
-								<EmojiPeopleIcon sx={{ fontSize: "4rem"}} />
-								<span>No pending requests found.</span>
+							<div className="col-span-full"> 
+								<div className="flex flex-col items-center justify-center gap-4 p-6">
+									<EmojiPeopleIcon sx={{ fontSize: "4rem"}} />
+									<span>No pending requests found.</span>
+								</div>
 							</div>
 						}
 					</div>
@@ -254,21 +275,29 @@ const Network = () => {
 			{/* Suggested Profiles */}
 			{activeTab === "collaborators" && (
 				<div className="bg-surface text-app p-4 rounded-xl mt-4">
-					<div className="flex flex-col gap-2">
-						{suggestedProfiles.length > 0 ? suggestedProfiles.map((profile) => (
-							<div key={profile.id} className="flex flex-row items-center justify-between px-2">
-								{/* Profile */}
-								<Link to={`/profile/${profile.username}`} className="flex flex-row gap-4 items-center">
-									<Avatar src={profile.avatar_url} />
-									<div className="flex flex-col items-start">
-										<span>{profile.username}</span>
-										<span className="caption">{profile.location}</span>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+						{suggestedProfiles && suggestedProfiles.length > 0 ? suggestedProfiles.map((profile) => (
+							<div key={profile.id} className="flex flex-row items-center justify-between px-6 py-4 rounded-xl border border-muted">
+								<div className="flex flex-row gap-8 items-center">
+									{/* Profile */}
+									<div className="flex-1 min-w-48">
+										<Link to={`/profile/${profile.username}`} className="flex flex-row gap-4 items-center">
+											<Avatar src={profile.avatar_url} />
+											<div className="flex flex-col items-start">
+												<span>{profile.username}</span>
+												{profile.location && (
+													<span className="caption">{profile.location}</span>
+												)}
+											</div>
+										</Link>
 									</div>
-								</Link>
-								{/* Social Links */}
-								<div className="flex flex-row gap-4 [&_a]:hover:scale-110">
-									<a href={profile.github_url} target="_blank" rel="nofollow"><GitHubIcon /></a>
-									<a href={profile.linkedin_url} target="_blank" rel="nofollow"><LinkedInIcon /></a>
+									{/* Social Links */}
+									<div className="hidden md:block">
+										<div className="flex flex-row gap-4 [&_a]:hover:scale-110">
+											<a href={formatLink(profile.github_url)} target="_blank" rel="nofollow"><GitHubIcon /></a>
+											<a href={formatLink(profile.linkedin_url)} target="_blank" rel="nofollow"><LinkedInIcon /></a>
+										</div>
+									</div>
 								</div>
 								{/* Request Connection */}
 								<div className="flex flex-row gap-4">
@@ -279,15 +308,17 @@ const Network = () => {
 							</div>
 							))
 							:
-							<div className="flex flex-col items-center justify-center gap-4 p-6">
-								<EmojiPeopleIcon sx={{ fontSize: "4rem"}} />
-								<span>No suggested profiles.</span>
+							<div className="col-span-full">
+								<div className="flex flex-col items-center justify-center gap-4 p-6">
+									<EmojiPeopleIcon sx={{ fontSize: "4rem"}} />
+									<span>No suggested profiles.</span>
+								</div>
 							</div>
 						}
 					</div>
 				</div>
 			)}
-		</div>
+		</>
 	)
 }
 
