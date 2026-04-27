@@ -55,27 +55,27 @@ const createProfile = async (req, res) => {
     }
 }
 
-const updateprofile = async (req, res) => {
-    const id = req.params.id;
+const updateProfile = async (req, res) => {
+    const userId = req.params.user_id;
     const { bio, location, github_url, linkedin_url, other_url } = req.body;
 
     try {
-        const updatedProfile = await pool.query(
+        const updated = await pool.query(
             `UPDATE profiles
              SET bio = $1,
                  location = $2,
                  github_url = $3,
                  linkedin_url = $4,
-                 other_url = $5
+                 other_url = $5,
                  is_complete = true
-             WHERE id = $6
+             WHERE user_id = $6
              RETURNING *`,
-            [bio, location, github_url, linkedin_url, other_url, id]
+            [bio, location, github_url, linkedin_url, other_url, userId]
         );
-        if (updatedProfile.rows.length === 0) {
+        if (updated.rows.length === 0) {
             return res.status(404).json({ message: 'Profile not found' });
         }
-        res.status(200).json(updatedProfile.rows[0]);
+        res.status(200).json(updated.rows[0]);
     }
     catch (err) {
         res.status(409).json({ message: 'Error updating profile', error: err.message });
@@ -86,5 +86,5 @@ export default {
     getProfile,
     getProfileByUserId,
     createProfile,
-    updateprofile
+    updateProfile
 }
