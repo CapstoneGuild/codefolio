@@ -8,7 +8,7 @@ Designed and developed by:
 - Irene Gallini
 - Mycah Accad
 
-🔗 Link to deployed app:
+🔗 Link to deployed app: https://codefolio-client.onrender.com
 
 ## About
 
@@ -52,19 +52,22 @@ The purpose of CodeFolio is to create a centralized platform where developers ca
 
 Users can create an account, log in securely, and access personalized features using OAuth authentication via GitHub
 
-https://github.com/user-attachments/assets/79f95c7d-c524-4910-963e-95bb1bc24e8f
+<video src="https://github.com/user-attachments/assets/79f95c7d-c524-4910-963e-95bb1bc24e8f" controls width="600"></video>
 
-### [User Profile Creation]
+
+### ✅ Create User Profile
 
 Users can create and edit a developer profile that includes their bio, tech stack, location, and social links.
 
 <img src="milestones/images/createProfile.gif" alt="Create Profile GIF">
 
-### [Create Project]
+
+### ✅ Create Project
 
 Users can create and manage projects by adding a title, description, images or GIFs, and external links such GitHub or live demos.
 
-[gif goes here]
+<img src="milestones/images/createProject.gif" alt="Create Project">
+
 
 ### ✅ Project Feed
 
@@ -72,11 +75,13 @@ Users and visitors can browse a feed of uploaded projects to discover work share
 
 <img src="milestones/images/projects.png" alt="Projects">
 
+
 ### ✅ Project Detail Page
 
 Users can click on a project to view more detailed information, including the project description, walthrough visuals, and related links.
 
 <img src="milestones/images/project_details.gif" alt="Projects">
+
 
 ### [Search Functionality]
 
@@ -84,26 +89,32 @@ Users can search for projects by title or keyword to quickly find projefcts rela
 
 [gif goes here]
 
-### [Like Projects]
 
-Users can like projects to show appreciation and increase engagement on the platform.
+### ✅ Like and Comment on Posts
 
-[gif goes here]
+Users can like posts to show appreciation and comment to increase engagement on the platform.
+
+<img src="milestones/images/commentPost.gif>
+
 
 ### Stretch Features (Nice-to-Have)
 
-### ✅ Connection Requests
+### ✅ Send Connection Request
 
 Users can send and receive connection requests to build their network and connect with other developers.
 
-https://github.com/user-attachments/assets/e2f90fd6-5d04-4114-a7e5-158985ca42b7
+<video src="https://github.com/user-attachments/assets/e2f90fd6-5d04-4114-a7e5-158985ca42b7" controls width="600"></video>
 
-### ✅ Create Posts & Comment on Posts
+<img src="milestones/images/acceptConnection.gif" alt="Accept Connection Request">
+
+
+### ✅ Create & Comment on Posts
 
 Logged-in users can create on posts to ask questions, give feedback, or interact with other creators.
 Logged-in users can comment on posts to ask questions, give feedback, or interact with other creators.
 
-https://github.com/user-attachments/assets/98040874-eb20-4a0e-8178-52a0d08fde7e
+<video src="https://github.com/user-attachments/assets/98040874-eb20-4a0e-8178-52a0d08fde7e" controls width="600"></video>
+
 
 ### [Bookmark or Save Projects]
 
@@ -111,17 +122,13 @@ Users can save projects they are interested in so they can revisit them later.
 
 [gif goes here]
 
-### [Notifications]
+
+### ✅ Notifications
 
 Users can receive notifications for actions such as new connection requests, accepted requests, or comments on their projects.
 
-[gif goes here]
+<img src="milestones/images/acceptConnection.gif" alt="Accept Connection Request">
 
-### [Portfolio Feedback Features]
-
-Users can receive UI/UX or projefct feedback from others to improve the quality of their portfolio and showcased work.
-
-[gif goes here]
 
 ## Installation Instructions
 
