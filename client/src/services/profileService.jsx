@@ -11,6 +11,15 @@ const getProfile = async (id) => {
     }
 }
 
+const getProfileByUserId = async(userId) => {
+    try {
+        const response = await profile.get(`/user/${userId}`)
+        return response.data
+    } catch (err) {
+        throw new Error(err.response?.data?.message || 'Unable to fetch profile')
+    }
+}
+
 const createProfile = async (profileData) => {
     try {
         const response = await profile.post('/', profileData)
@@ -31,6 +40,7 @@ const updateProfile = async (id, profileData) => {
 
 export default {
     getProfile,
+    getProfileByUserId,
     createProfile,
     updateProfile
 }

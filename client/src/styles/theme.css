@@ -137,4 +137,24 @@ html[data-theme="dark"] {
     background-color: var(--app-surface);
     color: var(--app-text);
   }
+
+  .form-container {
+    @apply max-w-2xl mx-auto p-6 rounded-xl flex-col gap-6;
+    background-color: var(--app-surface);
+  }
+
+  .form-field {
+    @apply flex flex-col gap-1;
+  }
+
+  .form-label {
+    @apply text-base;
+    color: var(--app-text-muted);
+  }
+
+  .form-input {
+    @apply px-4 py-2 rounded-lg border;
+    background-color: var(--app-bg);
+    color: var(--app-text);
+  }
 }

@@ -68,6 +68,34 @@ const getProjectById = async (req, res) => {
     }
 }
 
+const getProjectsByUser = async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const result = await pool.query(
+            `SELECT pr.*, u.username, u.avatar_url
+            FROM projects pr
+            JOIN profiles p ON pr.profile_id = p.id
+            LEFT JOIN users u ON p.user_id = u.id
+            WHERE p.user_id = $1
+            ORDER BY pr.created_at DESC`,
+            [userId]
+        );
+        const projects = result.rows.map(row => {
+            const { username, avatar_url, ...projectData } = row;
+            return {
+                ...projectData,
+                owner: { username, avatar_url }
+            };
+        });
+
+        res.status(200).json({ projects });
+
+    } catch (err) {
+        res.status(409).json({ message: 'Error fetching projects', error: err.message });
+    }
+}
+
 const createProject = async (req, res) => {
     const userId = req.user.id;
     const {title, description, tech_stack, demo_url, collaborators, links, license, image_url} = req.body;
@@ -147,6 +175,7 @@ const deleteProject = async (req, res) => {
 export default {
     getAllProjects,
     getProjectById,
+    getProjectsByUser,
     createProject,
     updateProject,
     deleteProject

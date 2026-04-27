@@ -19,8 +19,9 @@ export const AuthProvider = ({ children }) => {
       }
 
       setUser({
+        id: response.user.id,
         username: response.user.username,
-        avatar_url: response.user.avatar_url,
+        avatar_url: response.user.avatar_url
       })
       setIsAuthenticated(true)
     } catch (error) {
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  useEffect(() => {    
+  useEffect(() => {
     checkAuth()
   }, [])
 
