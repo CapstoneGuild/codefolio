@@ -9,6 +9,7 @@ import Projects from "./pages/Projects"
 import Login from "./pages/Login"
 import CreateProfile from "./pages/CreateProfile"
 import UserProfile from "./pages/UserProfile"
+import EditProfile from "./pages/EditProfile"
 
 import AboutTab from "./components/user-profile/AboutTab";
 import ProjectsTab from "./components/user-profile/ProjectsTab";
@@ -51,14 +52,14 @@ const ProtectedRoute = ({ isAuthenticated, isChecking }) => {
 				const profile = await profileService.getProfileByUserId(user.id)
 
 				if (profile && profile.is_complete === false) {
-					navigate(`/profile/${profile.id}/create`)
+					navigate(`/profile/user/${user.id}/create`)
 				}
 			} catch (err) {
 				console.log("Profile not found yet")
 				/*if you run into server 500 during testing,
 				uncomment the line below to be prompted to create
 				your profile⬇️ */
-				navigate(`/profile/${user.id}/create`)
+				navigate(`/profile/user/${user.id}/create`)
 			}
 		};
 
@@ -125,11 +126,15 @@ function App() {
 					element: <ProjectDetails />,
 				},
 				{
-					path: 'profile/:id/create',
+					path: 'profile/user/:id/create',
 					element: <CreateProfile />
 				},
 				{
-					path: 'profile/:id',
+					path: 'profile/user/:id/edit',
+					element: <EditProfile />
+				},
+				{
+					path: 'profile/user/:id',
 					element: <UserProfile />,
 					children: [
 						{
@@ -139,9 +144,6 @@ function App() {
 						{
 							path: 'projects', element: <ProjectsTab />
 						},
-						{
-							path: 'bookmarks', element: <BookmarksTab />
-						}
 					]
 				},
 				{

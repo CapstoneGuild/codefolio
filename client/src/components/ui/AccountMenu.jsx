@@ -106,7 +106,7 @@ export default function AccountMenu({ user, navigate }) {
       >
         {profile?.id && (
           <>
-            <MenuItem component={Link} to={`/profile/${profile.id}`}>
+            <MenuItem component={Link} to={`/profile/user/${user.id}`}>
               <Avatar /> Profile
             </MenuItem>
             <Divider />
