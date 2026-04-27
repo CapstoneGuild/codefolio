@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 // Service
 import projectService from '../services/projectService'
@@ -13,6 +13,8 @@ import LoadingSpinner from "../components/ui/LoadingSpinner"
 import InventoryIcon from '@mui/icons-material/Inventory';
 
 const Projects = () => {
+  const location = useLocation()
+
   const [projects, setProjects] = useState([])
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(true)
@@ -40,7 +42,7 @@ const Projects = () => {
 
   useEffect(() => {
     fetchProjects();
-  }, [offset]);
+  }, [offset, location.key]);
 
   const handleNext = () => {
     if (hasMore) {

@@ -56,7 +56,7 @@ const EditProfile = () => {
                 is_complete: true
         });
             notifySuccess('Profile updated successfully!');
-            navigate(`/profile/user/${id}`);
+            navigate(`/profile/${id}`);
         } catch (error) {
             console.error('Error updating profile:', error);
             notifyError("Server error updating profile. Please try again.");
