@@ -90,11 +90,11 @@ Users can search for projects by title or keyword to quickly find projefcts rela
 [gif goes here]
 
 
-### [Like Projects]
+### ✅ Like and Comment on Posts
 
-Users can like projects to show appreciation and increase engagement on the platform.
+Users can like posts to show appreciation and comment to increase engagement on the platform.
 
-[gif goes here]
+<img src="milestones/images/commentPost.gif>
 
 
 ### Stretch Features (Nice-to-Have)
