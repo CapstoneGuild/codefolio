@@ -1,5 +1,4 @@
 import LeftSidebar from "../components/layout/LeftSidebar"
-import RightSidebar from "../components/layout/RightSidebar"
 
 const BodyLayout = ({ element }) => {
   return (
@@ -13,11 +12,6 @@ const BodyLayout = ({ element }) => {
       <main className="w-full flex-1 min-w-0 min-h-full">
         {element}
       </main>
-
-      {/* Right Sidebar */}
-      <aside className="hidden xl:block xl:w-56 shrink-0">
-        <RightSidebar />
-      </aside>
     </div>
   )
 }

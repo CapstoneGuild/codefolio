@@ -10,7 +10,7 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: '60%',
 	height: '80%',
-	borderRadius: '20px',
+	borderRadius: '0px 2rem',
   boxShadow: 24,
 	overflow: 'hidden'
 }
@@ -25,12 +25,17 @@ const GlobalModal = ({ open, onClose, element }) => {
       slotProps={{
         backdrop: {
           timeout: 500,
+          sx: {
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            backgroundColor: 'rgba(0,0,0,0.3)',
+          },
         },
       }}
     >
       <Fade in={open}>
         <Box sx={style}>
-          <div className="w-full h-full bg-app-bg overflow-hidden border border-muted px-8 py-6 shadow-sm max-w-none hover:shadow-md transition duration-300 text-app">
+          <div className="w-full h-full bg-app-bg overflow-y-scroll border border-muted px-8 py-6 shadow-sm max-w-none hover:shadow-md transition duration-300 text-app">
             {element}
           </div>
         </Box>

@@ -97,7 +97,7 @@ const ProjectDetails = () => {
 
   return (
     <>
-      <div className="w-full h-full bg-app-bg overflow-hidden max-w-none text-app md:px-8">
+      <div className="w-full h-full bg-surface px-6 py-4 rounded-xl overflow-hidden max-w-none text-app md:px-8 md:py-6">
 				<div className="mb-2 block lg:hidden shrink-0"> 
 					<Breadcrumbs aria-label="breadcrumb" className="text-sm text-app-muted">
 						<Link component={RouterLink} to="/" className="text-primary flex items-center gap-1">
@@ -157,7 +157,7 @@ const ProjectDetails = () => {
             </div>
           </div>
         </div>
-        <div className="py-6">
+        <div className="pt-6">
 					{/* Header */}
           <div className="flex flex-row items-center justify-between">
 						<div className="flex flex-col gap-1 items-start">
@@ -184,19 +184,19 @@ const ProjectDetails = () => {
 						</div>
             <div className="hover:scale-110">
               <Tooltip title={owner.username} arrow>
-              	<RouterLink to={`/profile/${owner.username}`}><Avatar src={owner.avatar_url}></Avatar></RouterLink>
+              	<RouterLink to={`/profile/${project.profile_id}`}><Avatar src={owner.avatar_url}></Avatar></RouterLink>
 							</Tooltip>		
             </div>
           </div>
   
           {/* Description */}
-          <div className="my-4">
+          <div className="mt-4">
             <h2 className="heading-sm text-muted">Description</h2>
-            <p className="body-lg">{project.description}</p>
+            <p className="body-lg font-medium">{project.description}</p>
           </div>
 
           {/* Tech Stack */}
-          <div className="my-4">
+          <div className="mt-4">
             <h2 className="heading-sm text-muted">Tech Stack</h2>
             <div className="flex flex-wrap gap-2 mt-4 [&_span]:body-lg">
               {renderBadges(project.tech_stack, null)}
@@ -205,7 +205,7 @@ const ProjectDetails = () => {
 
           {/* Demo */}
           {project.demo_url && (
-            <div className="my-4">
+            <div className="mt-4">
               <h2 className="heading-sm text-muted">Demo</h2>
               <a 
                 href={formatLink(project.demo_url)} 
@@ -220,7 +220,7 @@ const ProjectDetails = () => {
 
           {/* Collaborators */}
           {project.collaborators && (
-            <div className="my-4">
+            <div className="mt-4">
               <h2 className="heading-sm text-muted">Collaborators</h2>
               <div className="flex flex-wrap gap-2 mt-4 [&_span]:body-lg">
                 {renderBadges(project.collaborators, null)}
@@ -230,7 +230,7 @@ const ProjectDetails = () => {
 
           {/* Links */}
           {project.links && (
-            <div className="my-4">
+            <div className="mt-4">
               <h2 className="heading-sm text-muted mb-2">Links</h2>
               {linkArray && (
                 <button><a href={linkArray[0]} target="_blank" rel="nofollow"><GitHubIcon /></a></button>
@@ -240,7 +240,7 @@ const ProjectDetails = () => {
 
           {/* License */}
           {project.license && (
-            <div className="my-4">
+            <div className="mt-4">
               <h2 className="heading-sm text-muted">License</h2>
               <p className="body-lg">{project.license}</p>
             </div>
@@ -249,10 +249,15 @@ const ProjectDetails = () => {
       </div>
 
 			<GlobalModal
-				open={openEdit}
-				onClose={() => setOpenEdit(false)}
-				element={<EditProject />}
-			/>
+        open={openEdit}
+        onClose={() => setOpenEdit(false)}
+        element={
+          <EditProject
+            projectId={project.id}
+            onClose={() => setOpenEdit(false)}
+          />
+        }
+      />
     </>
   )
 }

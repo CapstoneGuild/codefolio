@@ -10,7 +10,7 @@ const ZoomImage = ({ alt, src }) => {
         src={src}
         alt={alt}
         onClick={() => setIsOpen(true)}
-        className="w-full object-cover max-h-60 rounded-xl cursor-pointer hover:opacity-80 transition"
+        className="w-full object-cover object-top max-h-60 rounded-xl cursor-pointer hover:opacity-80 transition"
       />
 
       {/* Fullscreen Modal */}

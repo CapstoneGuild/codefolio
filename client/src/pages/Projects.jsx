@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import ProjectCard from "../components/ui/ProjectCard"
+
+// Service
 import projectService from '../services/projectService'
-import LoadingSpinner from "../components/ui/LoadingSpinner"
+
+// Components
+import ProjectCard from "../components/ui/ProjectCard"
 import ErrorMessage from "../components/ui/ErrorMessage"
+import LoadingSpinner from "../components/ui/LoadingSpinner"
+
+// Icons
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const Projects = () => {
   const [projects, setProjects] = useState([])
-  const error = null
+  const [error, setError] = useState("")
   const [loading, setLoading] = useState(true)
   const [offset, setOffset] = useState(0)
   const [limit] = useState(20)
@@ -25,6 +32,7 @@ const Projects = () => {
       setTotalCount(data.pagination.totalCount);
     } catch (error) {
       console.error(error.message);
+      setError(error.message)
     } finally {
       setLoading(false);
     }
@@ -59,42 +67,52 @@ const Projects = () => {
   )
   
   return (
-   <div className="flex flex-col rounded-lg h-full">
-      <div className="flex-1 px-8 min-w-0 h-full">
+   <div className="flex flex-col h-full">
+      <div className="flex-1 min-w-0 h-full">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 justify-items-stretch auto-rows-fr">
-          {projects.map((project) => (
+          {projects.length > 0 ? projects.map((project) => (
             <Link
               key={project.id}
               to={`/projects/${project.id}`}
             >
               <ProjectCard key={project.id} project={project} />
             </Link>
-          ))}
+            )) 
+            :
+            <div className="col-span-full">
+              <div className="flex flex-col items-center justify-center py-6">
+                <InventoryIcon sx={{ fontSize: "6rem" }} />
+                <h1 className="heading-md mt-4">No Projects Found.</h1>
+              </div>
+            </div>
+          }
         </div>
       </div>
       
       {/* Pagination */}
-      <div className="flex items-center justify-center gap-4 px-8 py-4">
-        <button
-          onClick={handlePrevious}
-          disabled={offset === 0}
-          className="max-w-24 w-24 px-4 py-2 border rounded disabled:opacity-50"
-        >
-          Previous
-        </button>
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-4 px-8 py-4">
+          <button
+            onClick={handlePrevious}
+            disabled={offset === 0}
+            className="max-w-24 w-24 px-4 py-2 border rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
 
-        <span>
-          Page {currentPage} of {totalPages || 1}
-        </span>
+          <span>
+            Page {currentPage} of {totalPages || 1}
+          </span>
 
-        <button
-          onClick={handleNext}
-          disabled={!hasMore}
-          className="maxw-24 w-24 px-4 py-2 border rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+          <button
+            onClick={handleNext}
+            disabled={!hasMore}
+            className="maxw-24 w-24 px-4 py-2 border rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   )
 }

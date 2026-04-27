@@ -6,10 +6,14 @@ import useAuthSession from '../../hooks/useAuthSession';
 
 // Components
 import SearchBar from '../ui/SearchBar';
+import GlobalModal from '../ui/GlobalModal';
+import CreateProject from '../ui/CreateProject';
 
 // Icons
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+import Tooltip from "@mui/material/Tooltip"
+import AddIcon from '@mui/icons-material/Add';
 
 // Images
 import Codefolio from '../../assets/logo/codefolio.svg'
@@ -18,6 +22,8 @@ import CodefolioDark from '../../assets/logo/codefolio-dark.svg'
 const Navbar = () => {
   const navigate = useNavigate()
   const { user } = useAuthSession()
+
+  const [openCreateProject, setOpenCreateProject] = useState(false)
 
   const [theme, setTheme] = useState(() => {
       return localStorage.getItem("theme") || "light"
@@ -47,12 +53,23 @@ const Navbar = () => {
 
         {/* Right */}
         <div className='flex items-center justify-end gap-4 w-40 sm:w-52 lg:w-60'>
+          <Tooltip title="Add Project" arrow>
+            <button onClick={() => setOpenCreateProject(true)}>
+              <AddIcon />
+            </button>
+          </Tooltip>
           <button onClick={() => setTheme((prev) => (prev === "light" ? "dark" : "light"))}>
             {theme === "light" ? <DarkModeIcon /> : <LightModeOutlinedIcon />}
           </button>
           <AccountMenu user={user} navigate={navigate}/>
         </div>
       </div>
+
+      <GlobalModal
+				open={openCreateProject}
+				onClose={() => setOpenCreateProject(false)}
+				element={<CreateProject onClose={() => setOpenCreateProject(false)} />}
+			/>
     </div>
   )
 }

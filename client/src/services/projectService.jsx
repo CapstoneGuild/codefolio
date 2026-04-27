@@ -20,7 +20,7 @@ export const getProjectById = async (id) => {
     }
 }
 
-const createProject = async (projectData) => {
+export const createProject = async (projectData) => {
     try {
         const response = await project.post('/', projectData)
         return response.data
@@ -29,7 +29,7 @@ const createProject = async (projectData) => {
     }
 }
 
-const updateProject = async (id, projectData) => {
+export const updateProject = async (id, projectData) => {
     try {
         const response = await project.patch(`/${id}`, projectData)
         return response.data
@@ -38,7 +38,7 @@ const updateProject = async (id, projectData) => {
     }
 }
 
-const deleteProject = async (id) => {
+export const deleteProject = async (id) => {
     try {
         const response = await project.delete(`/${id}`)
         return response.data
