@@ -52,14 +52,14 @@ const ProtectedRoute = ({ isAuthenticated, isChecking }) => {
 				const profile = await profileService.getProfileByUserId(user.id)
 
 				if (profile && profile.is_complete === false) {
-					navigate(`/profile/user/${user.id}/create`)
+					navigate(`/profile/${user.id}/create`)
 				}
 			} catch (err) {
 				console.log("Profile not found yet")
 				/*if you run into server 500 during testing,
 				uncomment the line below to be prompted to create
 				your profile⬇️ */
-				navigate(`/profile/user/${user.id}/create`)
+				navigate(`/profile/${user.id}/create`)
 			}
 		};
 
@@ -126,15 +126,15 @@ function App() {
 					element: <ProjectDetails />,
 				},
 				{
-					path: 'profile/user/:id/create',
+					path: 'profile/:id/create',
 					element: <CreateProfile />
 				},
 				{
-					path: 'profile/user/:id/edit',
+					path: 'profile/:id/edit',
 					element: <EditProfile />
 				},
 				{
-					path: 'profile/user/:id',
+					path: 'profile/:id',
 					element: <UserProfile />,
 					children: [
 						{

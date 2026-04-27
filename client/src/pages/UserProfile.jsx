@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, Outlet, useParams, useLocation } from "react-router-dom";
 import useAuthSession from "../hooks/useAuthSession";
+import getProfileByUserId from "../services/profileService";
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -13,11 +14,10 @@ const UserProfile = () => {
     const fetchProfileData = async () => {
       try {
         // Fetch profile by user_id
-        const profileRes = await fetch(`/api/profiles/user/${id}`);
-        const profile = await profileRes.json();
+        const profileRes = await getProfileByUserId(id);
 
         //Combine Github OAuth + profile data => row
-        setuser({ gh: authUser, profile });
+        setuser({ gh: authUser, profileRes });
 
       } catch (error) {
         console.error("Error fetching user:" , error);
@@ -45,7 +45,7 @@ const UserProfile = () => {
           <h1 className="heading-lg">{user?.gh?.username}</h1>
           <p className="body-md">{user?.profile?.location}</p>
           <button>Collaborate</button>
-          <Link to={`/profile/user/${id}/edit`} className="my-2">Edit Profile</Link>
+          <Link to={`/profile/${id}/edit`} className="my-2">Edit Profile</Link>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ const UserProfile = () => {
         <ul className="flex gap-8 my-2">
           <li>
             <Link
-              to={`/profile/user/${id}`}
+              to={`/profile/${id}`}
               className={isActive("") ? "font-bold underline" : ""}
             >
               About
@@ -62,7 +62,7 @@ const UserProfile = () => {
           </li>
           <li>
             <Link
-              to={`/profile/user/${id}/projects`}
+              to={`/profile/${id}/projects`}
               className={isActive("projects") ? "font-bold underline" : ""}
             >
               Projects
@@ -70,7 +70,7 @@ const UserProfile = () => {
           </li>
           {/* <li>
             <Link
-              to={`/profile/user/${id}/bookmarks`}
+              to={`/profile/${id}/bookmarks`}
               className={isActive("bookmarks") ? "font-bold underline" : ""}
             >
               Bookmarks

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { createProject } from '../../services/projectService.jsx';
 import { notifyError, notifySuccess } from '../../utils/notifications.js';
 
@@ -47,7 +47,6 @@ const FIELD_GROUPS = [
 
 const CreateProject = ({ onClose }) => {
 	const navigate = useNavigate()
-	const location = useLocation()
 
 	const [project, setProject] = useState({
 		title: '',
@@ -108,11 +107,7 @@ const CreateProject = ({ onClose }) => {
 
 			onClose?.()
 
-			if (location.pathname === "/projects") {
-				navigate(0)
-			} else {
-				navigate("/projects")
-			}
+			navigate("/projects")
 		} catch (error) {
 			console.error('Error adding project:', error);
 			notifyError(error.message || 'Uh-oh, something went wrong.')
