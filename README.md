@@ -55,11 +55,13 @@ Users can create an account, log in securely, and access personalized features u
 <video src="https://github.com/user-attachments/assets/79f95c7d-c524-4910-963e-95bb1bc24e8f" controls width="600"></video>
 
 
-### ✅ Create User Profile
+### ✅ Create and Edit User Profile
 
 Users can create and edit a developer profile that includes their bio, tech stack, location, and social links.
 
 <img src="milestones/images/createProfile.gif" alt="Create Profile GIF">
+
+<img src="milestones/images/userProfile.gif" alt="Edit User Profile GIF">
 
 
 ### ✅ Create Project
@@ -114,14 +116,6 @@ Logged-in users can create on posts to ask questions, give feedback, or interact
 Logged-in users can comment on posts to ask questions, give feedback, or interact with other creators.
 
 <video src="https://github.com/user-attachments/assets/98040874-eb20-4a0e-8178-52a0d08fde7e" controls width="600"></video>
-
-
-### [Bookmark or Save Projects]
-
-Users can save projects they are interested in so they can revisit them later.
-
-[gif goes here]
-
 
 ### ✅ Notifications
 
