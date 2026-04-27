@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.get('/projects', projectController.getAllProjects);
 router.get('/projects/:id', projectController.getProjectById);
+router.get('/projects/user/:userId', projectController.getProjectsByUser);
 router.post('/projects', isAuthenticated, projectController.createProject);
 router.patch('/projects/:id', isAuthenticated, projectController.updateProject);
 router.delete('/projects/:id', isAuthenticated, projectController.deleteProject);
@@ -20,6 +21,7 @@ router.post('/posts/:id/comments', isAuthenticated, postController.addComment);
 router.get('/posts/:id/comments', postController.getPostComments);
 router.get('/hashtags/search', postController.searchHashtags);
 
+router.get('/profiles/user/:user_id', profileController.getProfileByUserId);
 router.get('/profiles/:id', profileController.getProfile);
 router.post('/profiles', isAuthenticated, profileController.createProfile);
 router.patch('/profiles/:id', isAuthenticated, profileController.updateprofile);

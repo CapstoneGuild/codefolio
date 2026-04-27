@@ -20,6 +20,15 @@ export const getProjectById = async (id) => {
     }
 }
 
+const getProjectsByUser = async (userId, limit = 20, offset = 0) => {
+    try {
+        const response = await project.get(`/user/${userId}?limit=${limit}&offset=${offset}`)
+        return response.data
+    } catch (err) {
+        throw new Error(err.response?.data?.message || 'Unable to fetch projects')
+    }
+}
+
 const createProject = async (projectData) => {
     try {
         const response = await project.post('/', projectData)
@@ -50,6 +59,7 @@ const deleteProject = async (id) => {
 export default {
     getAllProjects,
     getProjectById,
+    getProjectsByUser,
     createProject,
     updateProject,
     deleteProject
