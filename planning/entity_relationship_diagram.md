@@ -35,4 +35,4 @@ This table supports additional platform functionality that enhances user experie
 
 ## Entity Relationship Diagram
 
-![Preview](../client/public/ERD.png)
+![Preview](./ERD.png)
