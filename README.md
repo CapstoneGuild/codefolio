@@ -123,11 +123,11 @@ Users can save projects they are interested in so they can revisit them later.
 [gif goes here]
 
 
-### [Notifications]
+### ✅ Notifications
 
 Users can receive notifications for actions such as new connection requests, accepted requests, or comments on their projects.
 
-[gif goes here]
+<img src="milestones/images/acceptConnection.gif" alt="Accept Connection Request">
 
 
 ## Installation Instructions
