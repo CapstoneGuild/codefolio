@@ -9,7 +9,7 @@
     "reset": "node config/reset.js",
     "migrate": "node config/migrate.js",
     "migrate:status": "node config/migrate.js --status",
-    "start": "node server/server.js",
+    "start": "node server.js",
     "build": "cd client && vite build"
   },
   "keywords": [],
