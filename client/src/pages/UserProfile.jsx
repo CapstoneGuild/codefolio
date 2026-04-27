@@ -8,35 +8,44 @@ const UserProfile = () => {
 
   useEffect(() => {
     //fetch user data, projects, and bookmarks here
-    const fetchUser = async () => {
+    const fetchProfileData = async () => {
       try {
-        const response = await fetch(`/api/user/${id}`);
-        const data = await response.json();
-        setuser(data);
+        // Fetch profile by profile.id
+        const profileRes = await fetch(`/api/profile/${id}`);
+        const profile = await profileRes.json();
+
+        // Fetch user by profile.user_id
+        const userRes = await fetch(`/api/user/${profile.user_id}`);
+        const ghUser = await userRes.json();
+
+        //Combine fetches
+        setuser({ gh: ghUser, profile });
 
       } catch (error) {
         console.error("Error fetching user:" , error);
       }
     };
 
-    fetchUser();
+    fetchProfileData();
   }, [id]);
 
   //Highlight active tab
   const isActive = (path) =>
     location.pathname === `/profile/${id}${path ? `/${path}` : ""}`;
 
+  if (!user) return <p>Loading...</p>;
+
   return (
     <div className="container flex-col gap-8 my-2 p-4 bg-gray-100 rounded-lg">
 
       {/* Header*/}
       <div className="header flex items-center gap-4">
-        <img src="https://placehold.co/400" alt="user" className="w-32 h-32 rounded-full mb-4"
+        <img src={user?.gh?.avatar_url || "https://placehold.co/400"} alt="user" className="w-32 h-32 rounded-full mb-4"
         />
 
         <div className="flex-col items-center gap-2">
-          <h1 className="heading-lg">User Name</h1>
-          <p className="body-md">User Role</p>
+          <h1 className="heading-lg">{user?.gh?.username}</h1>
+          <p className="body-md">{user?.profile?.location}</p>
           <button>Collaborate</button>
         </div>
       </div>

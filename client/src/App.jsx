@@ -44,7 +44,7 @@ const ProtectedRoute = ({ isAuthenticated, isChecking }) => {
 	const { user } = useAuthSession();
 
 	useEffect(() => {
-		if (isChecking || !isAuthenticated || !user) return
+		if (isChecking || !isAuthenticated || !user || !user.id) return
 
 		const checkProfile = async () => {
 			try {
@@ -55,6 +55,10 @@ const ProtectedRoute = ({ isAuthenticated, isChecking }) => {
 				}
 			} catch (err) {
 				console.log("Profile not found yet")
+				/*if you run into server 500 during testing,
+				uncomment the line below to be prompted to create
+				your profile⬇️ */
+				navigate(`/profile/${user.id}/create`)
 			}
 		};
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
@@ -13,12 +13,31 @@ import Settings from '@mui/icons-material/Settings'
 import Logout from '@mui/icons-material/Logout'
 import { Link } from 'react-router-dom'
 import useAuthSession from '../../hooks/useAuthSession'
+import profileService from '../../services/profileService';
 
 export default function AccountMenu({ user, navigate }) {
   const { logout } = useAuthSession()
 
   const [anchorEl, setAnchorEl] = useState(null)
+  const [profile, setProfile] = useState(null)
+
   const open = Boolean(anchorEl)
+
+  useEffect(() => {
+    if (!user?.id) return
+
+    const loadProfile = async () => {
+      try {
+        const p = await profileService.getProfileByUserId(user.id)
+        setProfile(p)
+      } catch (err) {
+        console.error("Could not load profile, err")
+      }
+    }
+
+    loadProfile()
+  }, [user])
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -85,9 +104,9 @@ export default function AccountMenu({ user, navigate }) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        {user?.id && (
+        {profile?.id && (
           <>
-            <MenuItem component={Link} to={`/profile/${user.id}`}>
+            <MenuItem component={Link} to={`/profile/${profile.id}`}>
               <Avatar /> Profile
             </MenuItem>
             <Divider />
