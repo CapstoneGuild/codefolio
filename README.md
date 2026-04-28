@@ -12,12 +12,10 @@ Designed and developed by:
 
 ## About
 
-### Description and Purpose
-
-#### Description
+### Description
 CodeFolio is a developer portfolio builder and social platform designed to help users showcase their projects while connecting with other developers. Users can create personalized profiles that highlight their tech stack, bio, location, and social links, along with uploading project details such as images and external links. The application supports CRUD functionality, allowing users to create posts, search for projects, comment on content, manage profiles, and has user authentication. CodeFolio provides an interactive space for developers to collaborate and grow together.
 
-#### Purpose
+### Purpose
 The purpose of CodeFolio is to create a centralized platform where developers can easily showcase their work and discover others with similar interests. It aims to simplify networking by enabling meaningful connections within the developer community. By offering bite-sized project demos and an intuitive browsing experience, CodeFolio helps users learn from one another, gain inspiration, and open doors to internships, job opportunities, and collaborative projects.
 
 ### Inspiration
@@ -94,7 +92,7 @@ Users can create bookmarks to save projects they are interested in to the *bookm
 
 Users can like posts to show appreciation and comment to increase engagement on the platform.
 
-<img src="milestones/images/commentPost.gif>
+<img src="milestones/images/commentPost.gif">
 
 
 ### Stretch Features (Nice-to-Have)
