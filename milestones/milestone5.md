@@ -64,7 +64,7 @@ Complete the checklist below detailing each baseline, custom, and stretch featur
 - [ ] Restrict available user options dynamically, such as restricting available purchases based on a user's currency
 - [x] Show a spinner while a page or page element is loading
 - [ ] Disable buttons and inputs during the form submission process
-- [ ] Disable buttons after they have been clicked
+- [x] Disable buttons after they have been clicked
   - *At least 75% of buttons in your app must exhibit this behavior to receive full credit*
 - [ ] Users can upload images to the app and have them be stored on a cloud service
   - *A user profile picture does **NOT** count for this rubric item **only if** the app also includes "Login via GitHub" functionality.*

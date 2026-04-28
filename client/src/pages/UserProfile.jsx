@@ -68,14 +68,14 @@ const UserProfile = () => {
               Projects
             </Link>
           </li>
-          {/* <li>
+          <li>
             <Link
               to={`/profile/user/${id}/bookmarks`}
               className={isActive("bookmarks") ? "font-bold underline" : ""}
             >
               Bookmarks
             </Link>
-          </li> */}
+          </li>
         </ul>
       </div>
 

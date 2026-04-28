@@ -84,12 +84,10 @@ Users can click on a project to view more detailed information, including the pr
 
 <img src="milestones/images/project_details.gif" alt="Projects">
 
+### ✅ Bookmark Projects
+Users can create bookmarks to save projects they are interested in to the *bookmarks* tab in their user profile and revisit them later by clicking on the bookmark icon at the top of any detailed project page.
 
-### [Search Functionality]
-
-Users can search for projects by title or keyword to quickly find projefcts related to their interests.
-
-[gif goes here]
+<img src="milestones/images/projectBookmarks.gif" alt="Create Project Bookmark">
 
 
 ### ✅ Like and Comment on Posts
