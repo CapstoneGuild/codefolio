@@ -242,7 +242,7 @@ const ProjectDetails = () => {
 						</div>
             <div className="hover:scale-110">
               <Tooltip title={owner.username} arrow>
-              	<RouterLink to={`/profile/${project.profile_id}`}><Avatar src={owner.avatar_url}></Avatar></RouterLink>
+              	<RouterLink to={`/profile/${owner.user_id}`}><Avatar src={owner.avatar_url}></Avatar></RouterLink>
 							</Tooltip>
             </div>
           </div>

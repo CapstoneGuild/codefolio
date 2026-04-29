@@ -18,6 +18,7 @@ const getNetworkById = async (networkId) => {
 const getProfileCardByProfileId = async (profileId) => {
     const result = await pool.query(
         `SELECT p.id,
+                p.user_id,
                 p.bio,
                 p.location,
                 p.github_url,
@@ -256,6 +257,7 @@ const getPendingRequests = async (req, res) => {
         const pendingRequests = await pool.query(
             `SELECT n.id,
                     n.requester_id,
+                    p.user_id AS requester_user_id,
                     p.bio AS requester_bio,
                     p.location AS requester_location,
                     p.github_url AS requester_github_url,
@@ -285,6 +287,7 @@ const getPendingRequests = async (req, res) => {
             created_at: request.created_at,
             requester_profile: {
                 id: request.requester_id,
+                user_id: request.requester_user_id,
                 username: request.requester_username,
                 avatar_url: request.requester_avatar_url,
                 bio: request.requester_bio,
@@ -334,6 +337,10 @@ const getAllConnections = async (req, res) => {
                         WHEN n.requester_id = $1 THEN n.receiver_id
                         ELSE n.requester_id
                     END AS other_profile_id,
+                    CASE
+                        WHEN n.requester_id = $1 THEN pr2.user_id
+                        ELSE pr.user_id
+                    END AS other_user_id,
                     CASE
                         WHEN n.requester_id = $1 THEN pr2.bio
                         ELSE pr.bio
@@ -386,6 +393,7 @@ const getAllConnections = async (req, res) => {
             created_at: connection.created_at,
             other_profile: {
                 id: connection.other_profile_id,
+                user_id: connection.other_user_id,
                 username: connection.other_username,
                 avatar_url: connection.other_avatar_url,
                 bio: connection.other_bio,

@@ -24,7 +24,7 @@ const getAllPosts = async (req, res) => {
 
     try {
         const posts = await pool.query(
-            `SELECT p.*, u.username, u.avatar_url,
+            `SELECT p.*, u.id AS user_id, u.username, u.avatar_url,
                     COALESCE(
                         array_agg(h.tag_text) FILTER (WHERE h.tag_text IS NOT NULL),
                         '{}'
@@ -34,7 +34,7 @@ const getAllPosts = async (req, res) => {
              LEFT JOIN users u ON pr.user_id = u.id
              LEFT JOIN post_hashtags ph ON ph.post_id = p.id
              LEFT JOIN hashtags h ON h.id = ph.hashtag_id
-             GROUP BY p.id, u.username, u.avatar_url
+             GROUP BY p.id, u.id, u.username, u.avatar_url
              ORDER BY p.created_at DESC
              LIMIT $1 OFFSET $2`,
             [limit, offset]
@@ -168,7 +168,7 @@ const addComment = async (req, res) => {
 
         const comment = newComment.rows[0];
         const author = await pool.query(
-            `SELECT p.id AS profile_id, u.username, u.avatar_url
+            `SELECT p.id AS profile_id, p.user_id, u.username, u.avatar_url
              FROM profiles p
              LEFT JOIN users u ON p.user_id = u.id
              WHERE p.id = $1`,
@@ -179,6 +179,7 @@ const addComment = async (req, res) => {
             ...comment,
             author: {
                 profile_id: author.rows[0]?.profile_id || comment.profile_id,
+                user_id: author.rows[0]?.user_id || null,
                 username: author.rows[0]?.username || null,
                 avatar_url: author.rows[0]?.avatar_url || null,
             },
@@ -210,6 +211,7 @@ const getPostComments = async (req, res) => {
                     c.profile_id,
                     c.content,
                     c.created_at,
+                    p.user_id,
                     u.username,
                     u.avatar_url
              FROM comments c
@@ -231,8 +233,22 @@ const getPostComments = async (req, res) => {
         const totalCount = totalCountResult.rows[0].total_count;
         const hasMore = offset + comments.rows.length < totalCount;
 
+        const formattedComments = comments.rows.map((comment) => ({
+            id: comment.id,
+            post_id: comment.post_id,
+            profile_id: comment.profile_id,
+            content: comment.content,
+            created_at: comment.created_at,
+            author: {
+                profile_id: comment.profile_id,
+                user_id: comment.user_id,
+                username: comment.username,
+                avatar_url: comment.avatar_url,
+            },
+        }));
+
         res.status(200).json({
-            comments: comments.rows,
+            comments: formattedComments,
             pagination: {
                 totalCount,
                 limit,
@@ -243,6 +259,74 @@ const getPostComments = async (req, res) => {
     }
     catch (err) {
         res.status(500).json({ message: 'Error fetching comments', error: err.message });
+    }
+}
+
+const likePost = async (req, res) => {
+    const userId = req.user.id;
+    const postId = req.params.id;
+
+    try {
+        const userProfile = await pool.query(`SELECT id from profiles WHERE user_id = $1`, [userId]);
+        if (userProfile.rows.length === 0) {
+            return res.status(404).json({ message: 'Profile not found for user' });
+        }
+
+        const post = await pool.query(`SELECT id FROM posts WHERE id = $1`, [postId]);
+        if (post.rows.length === 0) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        const updatedPost = await pool.query(
+            `UPDATE posts
+             SET likes_count = likes_count + 1
+             WHERE id = $1
+             RETURNING id, likes_count`,
+            [postId]
+        );
+
+        res.status(200).json({
+            post_id: updatedPost.rows[0].id,
+            likes_count: updatedPost.rows[0].likes_count,
+            liked_by_me: true,
+        });
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Error liking post', error: err.message });
+    }
+}
+
+const unlikePost = async (req, res) => {
+    const userId = req.user.id;
+    const postId = req.params.id;
+
+    try {
+        const userProfile = await pool.query(`SELECT id from profiles WHERE user_id = $1`, [userId]);
+        if (userProfile.rows.length === 0) {
+            return res.status(404).json({ message: 'Profile not found for user' });
+        }
+
+        const post = await pool.query(`SELECT id FROM posts WHERE id = $1`, [postId]);
+        if (post.rows.length === 0) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        const updatedPost = await pool.query(
+            `UPDATE posts
+             SET likes_count = GREATEST(likes_count - 1, 0)
+             WHERE id = $1
+             RETURNING id, likes_count`,
+            [postId]
+        );
+
+        res.status(200).json({
+            post_id: updatedPost.rows[0].id,
+            likes_count: updatedPost.rows[0].likes_count,
+            liked_by_me: false,
+        });
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Error unliking post', error: err.message });
     }
 }
 
@@ -283,5 +367,7 @@ export default {
     deletePost,
     addComment,
     getPostComments,
+    likePost,
+    unlikePost,
     searchHashtags
 }

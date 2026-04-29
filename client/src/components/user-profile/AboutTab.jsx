@@ -2,6 +2,7 @@ import { useOutletContext } from "react-router-dom";
 
 const AboutTab = () => {
     const { user } = useOutletContext();
+    const profile = user?.profile || user || {};
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -9,14 +10,14 @@ const AboutTab = () => {
             <div className="flex-col gap-4 border border-gray-300 rounded-xl p-4 mb-4">
                 <h3 className="heading-md">Bio</h3>
                 <p className="body-md mb-4">
-                    {user.profile.bio || "No bio provided yet."}
+                    {profile.bio || "No bio provided yet."}
                 </p>
             </div>
             <div className="flex-col gap-4 border border-gray-300 rounded-xl p-4 mb-4">
                 <h3 className="heading-md">GitHub</h3>
                 <p className="body-md mb-4">
-                    {user.profile.github_url && (
-                        <a href={user.profile.github_url}
+                    {profile.github_url && (
+                        <a href={profile.github_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 underline">
@@ -28,8 +29,8 @@ const AboutTab = () => {
             <div className="flex-col gap-4 border border-gray-300 rounded-xl p-4 mb-4">
                 <h3 className="heading-md">LinkedIn</h3>
                 <p className="body-md mb-4">
-                    {user.profile.linkedin_url && (
-                        <a href={user.profile.linkedin_url}
+                    {profile.linkedin_url && (
+                        <a href={profile.linkedin_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 underline">
@@ -57,8 +58,8 @@ const AboutTab = () => {
             <div className="flex-col gap-4 border border-gray-300 rounded-xl p-4 mb-4">
                 <h3 className="heading-md">Other Link</h3>
                 <p className="body-md mb-4">
-                    {user.profile.other_url && (
-                        <a href={user.profile.other_url}
+                    {profile.other_url && (
+                        <a href={profile.other_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 underline">

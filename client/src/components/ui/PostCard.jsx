@@ -1,31 +1,78 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Avatar } from '@mui/material'
 import { Add, Star, StarBorder, ModeComment } from '@mui/icons-material'
 import { formatDate } from '../../utils/format'
 import postService from '../../services/postService'
 import { notifyError } from '../../utils/notifications'
+import useAuthSession from '../../hooks/useAuthSession'
 
 const PostCard = ({ post }) => {
+    const { user } = useAuthSession()
     const [isStarred, setIsStarred] = useState(false)
     const [likes, setLikes] = useState(post.likes_count ?? 0)
     const [comments, setComments] = useState([])
     const [openComment, setOpenComment] = useState(false)
     const [commentText, setCommentText] = useState('')
     const [loadingComments, setLoadingComments] = useState(false)
+    const [isLiking, setIsLiking] = useState(false)
     const hashtags = post.hashtags ?? []
+    const likesStorageKey = useMemo(() => `liked_posts_${user?.id ?? 'guest'}`, [user?.id])
 
-    const handleStarred = () => {
-        setIsStarred(!isStarred)
-        setLikes(isStarred ? likes - 1 : likes + 1)
+    useEffect(() => {
+        try {
+            const raw = localStorage.getItem(likesStorageKey)
+            const likedPosts = raw ? JSON.parse(raw) : []
+            setIsStarred(Array.isArray(likedPosts) && likedPosts.includes(post.id))
+        } catch {
+            setIsStarred(false)
+        }
+    }, [likesStorageKey, post.id])
+
+    const persistLikedState = (liked) => {
+        try {
+            const raw = localStorage.getItem(likesStorageKey)
+            const likedPosts = raw ? JSON.parse(raw) : []
+            const normalized = Array.isArray(likedPosts) ? likedPosts : []
+
+            const updated = liked
+                ? Array.from(new Set([...normalized, post.id]))
+                : normalized.filter((id) => id !== post.id)
+
+            localStorage.setItem(likesStorageKey, JSON.stringify(updated))
+        } catch {
+            // Ignore localStorage failures; backend count update still succeeds.
+        }
+    }
+
+    const handleStarred = async () => {
+        if (isLiking) return
+        setIsLiking(true)
+        try {
+            if (isStarred) {
+                const data = await postService.unlikePost(post.id)
+                setIsStarred(false)
+                setLikes(data.likes_count ?? 0)
+                persistLikedState(false)
+            } else {
+                const data = await postService.likePost(post.id)
+                setIsStarred(true)
+                setLikes(data.likes_count ?? 0)
+                persistLikedState(true)
+            }
+        } catch (err) {
+            notifyError(err.message)
+        } finally {
+            setIsLiking(false)
+        }
     }
 
     const handleToggleComments = async () => {
         setOpenComment((prev) => !prev)
-        if (comments !== null) return
+        if (comments.length > 0) return
         setLoadingComments(true)
         try {
-            const data = await postService.getPostComments(post.id)
+            const data = await postService.getPostComments(post.id, 100, 0)
             setComments(data.comments ?? data)
         } catch (err) {
             notifyError(err.message)
@@ -51,10 +98,9 @@ const PostCard = ({ post }) => {
             <div className='p-6'>
                 <div className='flex items-center justify-between gap-3'>
                     <div className='flex items-center gap-2.5'>
-                        <Link to="/profile"><Avatar src={post.avatar_url} sx={{ width: 48, height: 48 }} /></Link>
+                        <Link to={`/profile/${post.user_id}`}><Avatar src={post.avatar_url} sx={{ width: 48, height: 48 }} /></Link>
                         <div className='leading-tight'>
                             <h1 className='body-sm text-sm font-semibold'>{post.username}</h1>
-                            <p className='body-sm text-xs'>@janedoe</p>
                             <span className='caption text-muted text-xs'>{formatDate(post.created_at)}</span>
                         </div>
                     </div>
@@ -77,7 +123,10 @@ const PostCard = ({ post }) => {
                 {post.media_url && <img src={post.media_url} alt="Project Thumbnail" className="mt-6 w-full rounded-2xl object-cover" />}
                 <div className='flex items-center justify-between'>
                     <div className='mt-4 flex items-center gap-3 text-app'>
-                        <div onClick={() => handleStarred()} className='flex flex-col items-center justify-center rounded-lg border border-muted px-2.5 py-1 cursor-pointer hover:bg-gray-100'>
+                        <div
+                            onClick={() => handleStarred()}
+                            className={`flex flex-col items-center justify-center rounded-lg border border-muted px-2.5 py-1 cursor-pointer hover:bg-gray-100 ${isLiking ? 'pointer-events-none opacity-60' : ''}`}
+                        >
                             <span className='flex items-center gap-2'>{isStarred ? <Star fontSize='small' /> : <StarBorder fontSize='small' />}{likes}</span>
                             <p className='text-sm'>Like</p>
                         </div>
@@ -116,12 +165,16 @@ const PostCard = ({ post }) => {
 
                     {!loadingComments && comments?.map((c) => (
                         <div key={c.id} className='flex gap-2.5'>
-                            <Link to="/profile">
-                                <Avatar src={c.author?.avatar_url} sx={{ width: 28, height: 28 }} />
-                            </Link>
+                            {(c.author?.user_id ?? c.user_id) ? (
+                                <Link to={`/profile/${c.author?.user_id ?? c.user_id}`}>
+                                    <Avatar src={c.author?.avatar_url ?? c.avatar_url} sx={{ width: 28, height: 28 }} />
+                                </Link>
+                            ) : (
+                                <Avatar src={c.author?.avatar_url ?? c.avatar_url} sx={{ width: 28, height: 28 }} />
+                            )}
                             <div className='flex flex-col leading-tight'>
                                 <div className='flex items-baseline gap-1.5'>
-                                    <span className='text-sm font-semibold text-app'>{c.author?.username}</span>
+                                    <span className='text-sm font-semibold text-app'>{c.author?.username ?? c.username}</span>
                                     <span className='text-xs text-app-muted'>{formatDate(c.created_at)}</span>
                                 </div>
                                 <p className='text-sm text-app mt-0.5'>{c.content}</p>

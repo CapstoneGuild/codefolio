@@ -18,6 +18,8 @@ router.delete('/projects/:id', isAuthenticated, projectController.deleteProject)
 router.get('/posts', postController.getAllPosts);
 router.post('/posts', isAuthenticated, postController.createPost);
 router.delete('/posts/:id', isAuthenticated, postController.deletePost);
+router.post('/posts/:id/likes', isAuthenticated, postController.likePost);
+router.delete('/posts/:id/likes', isAuthenticated, postController.unlikePost);
 router.post('/posts/:id/comments', isAuthenticated, postController.addComment);
 
 router.get('/posts/:id/comments', postController.getPostComments);
