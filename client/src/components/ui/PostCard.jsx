@@ -51,7 +51,7 @@ const PostCard = ({ post }) => {
             <div className='p-6'>
                 <div className='flex items-center justify-between gap-3'>
                     <div className='flex items-center gap-2.5'>
-                        <Link to={`/profile/user/${post.user_id}`}><Avatar src={post.avatar_url} sx={{ width: 48, height: 48 }} /></Link>
+                        <Link to={`/profile/${post.user_id}`}><Avatar src={post.avatar_url} sx={{ width: 48, height: 48 }} /></Link>
                         <div className='leading-tight'>
                             <h1 className='body-sm text-sm font-semibold'>{post.username}</h1>
                             <span className='caption text-muted text-xs'>{formatDate(post.created_at)}</span>
@@ -116,7 +116,7 @@ const PostCard = ({ post }) => {
                     {!loadingComments && comments?.map((c) => (
                         <div key={c.id} className='flex gap-2.5'>
                             {c.author?.user_id ? (
-                                <Link to={`/profile/user/${c.author.user_id}`}>
+                                <Link to={`/profile/${c.author.user_id}`}>
                                     <Avatar src={c.author?.avatar_url} sx={{ width: 28, height: 28 }} />
                                 </Link>
                             ) : (
