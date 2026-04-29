@@ -63,6 +63,11 @@ Users can create and edit a developer profile that includes their bio, tech stac
 
 <img src="milestones/images/userProfile.gif" alt="Edit User Profile GIF">
 
+### ✅ View Author Profiles
+
+Users can click on any avatar belonging to another user to view their developer profile. It is identical to the user profile, except the absence of an *edit* button.
+
+<img src="milestones/images/authorProfiles.gif">
 
 ### ✅ Create Project
 
