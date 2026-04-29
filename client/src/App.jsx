@@ -135,7 +135,7 @@ function App() {
 				},
 				{
 					path: 'profile/user/:id',
-					element: <UserProfile />,
+					element: <UserProfile isPublic={false} />,
 					children: [
 						{
 							index: true,
@@ -146,6 +146,19 @@ function App() {
 						},
 						{
 							path: 'bookmarks', element: <BookmarksTab />
+						}
+					]
+				},
+				{
+					path: 'profile/:id',
+					element: <UserProfile isPublic={true} />,
+					children: [
+						{
+							index: true,
+							element: <AboutTab />
+						},
+						{
+							path: 'projects', element: <ProjectsTab />
 						}
 					]
 				},
