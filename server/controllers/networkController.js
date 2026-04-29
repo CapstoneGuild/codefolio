@@ -132,7 +132,7 @@ const acceptRequest = async (req, res) => {
             requester_profile: requesterProfile,
             receiver_profile: receiverProfile,
         });
-        
+
     }
     catch (err) {
         res.status(500).json({ message: 'Error accepting connection request', error: err.message });
@@ -335,6 +335,10 @@ const getAllConnections = async (req, res) => {
                         ELSE n.requester_id
                     END AS other_profile_id,
                     CASE
+                        WHEN n.requester_id = $1 THEN u2.id
+                        ELSE u1.id
+                    END AS other_user_id,
+                    CASE
                         WHEN n.requester_id = $1 THEN pr2.bio
                         ELSE pr.bio
                     END AS other_bio,
@@ -386,6 +390,7 @@ const getAllConnections = async (req, res) => {
             created_at: connection.created_at,
             other_profile: {
                 id: connection.other_profile_id,
+                user_id: connection.other_user_id,
                 username: connection.other_username,
                 avatar_url: connection.other_avatar_url,
                 bio: connection.other_bio,
@@ -437,7 +442,7 @@ const getSuggestedProfiles = async (req, res) => {
             AND NOT EXISTS (
                 SELECT 1
                 FROM network n
-                WHERE 
+                WHERE
                     n.status IN ('pending', 'accepted')
                     AND (
                     (n.requester_id = $1 AND n.receiver_id = p.id)
@@ -458,7 +463,7 @@ const getSuggestedProfiles = async (req, res) => {
             AND NOT EXISTS (
                 SELECT 1
                 FROM network n
-                WHERE 
+                WHERE
                     n.status IN ('pending', 'accepted')
                     AND (
                     (n.requester_id = $1 AND n.receiver_id = p.id)

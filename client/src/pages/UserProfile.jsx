@@ -33,19 +33,26 @@ const UserProfile = () => {
 
   if (!user) return <p>Loading...</p>;
 
+  //Determine if the user is the profile owner
+  const isOwner = user?.gh?.id === user?.profile?.user_id;
+
   return (
     <div className="container flex-col gap-8 my-2 p-4 bg-gray-100 rounded-lg">
 
       {/* Header*/}
       <div className="header flex items-center gap-4">
-        <img src={user?.gh?.avatar_url || "https://placehold.co/400"} alt="user" className="w-32 h-32 rounded-full mb-4"
+        <img src={user?.profile?.avatar_url || "https://placehold.co/400"} alt="user" className="w-32 h-32 rounded-full mb-4"
         />
 
         <div className="flex flex-col items-start gap-2">
-          <h1 className="heading-lg">{user?.gh?.username}</h1>
+          <h1 className="heading-lg">{user?.profile?.username}</h1>
           <p className="body-md">{user?.profile?.location}</p>
           <button>Collaborate</button>
-          <Link to={`/profile/user/${id}/edit`} className="my-2">Edit Profile</Link>
+
+          {/*Conditionally render edit button based on profile ownership */}
+          {isOwner && (
+          <Link to={`/profile/user/${id}/edit`} className="my-2">⚙️ Edit Profile</Link>
+          )}
         </div>
       </div>
 

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 // Service
-import { 
-	getConnections, 
-	getPendingRequests, 
-	removeConnection, 
-	acceptConnectionRequest, 
-	rejectConnectionRequest, 
+import {
+	getConnections,
+	getPendingRequests,
+	removeConnection,
+	acceptConnectionRequest,
+	rejectConnectionRequest,
 	getSuggestedProfiles,
 	sendConnectionRequest
 } from "../services/networkService"
@@ -186,7 +186,8 @@ const Network = () => {
 								<div className="flex flex-row gap-8 items-center justify-between">
 									{/* Profile */}
 									<div className="flex-1 min-w-48">
-										<Link to={`/profile/${user.other_profile.id}`} className="flex flex-row gap-4 items-center">
+										{/* <Link to={`/profile/${user.other_profile.id}`} className="flex flex-row gap-4 items-center"> */}
+										<Link to={`/profile/user/${user.other_profile.user_id}`} className="flex flex-row gap-4 items-center">
 											<Avatar src={user.other_profile.avatar_url} />
 											<div className="flex flex-col items-start">
 												<span>{user.other_profile.username}</span>
@@ -232,7 +233,8 @@ const Network = () => {
 								<div className="flex flex-row gap-8 items-center">
 									{/* Profile */}
 									<div className="flex-1 min-w-48">
-										<Link to={`/profile/${user.requester_profile.id}`} className="flex flex-row gap-4 items-center">
+										{/* <Link to={`/profile/${user.requester_profile.id}`} className="flex flex-row gap-4 items-center"> */}
+										<Link to={`/profile/user/${user.requester_profile.user_id}`}>
 											<Avatar src={user.requester_profile.avatar_url} />
 											<div className="flex flex-col items-start">
 												<span>{user.requester_profile.username}</span>
@@ -262,7 +264,7 @@ const Network = () => {
 							</div>
 							))
 							:
-							<div className="col-span-full"> 
+							<div className="col-span-full">
 								<div className="flex flex-col items-center justify-center gap-4 p-6">
 									<EmojiPeopleIcon sx={{ fontSize: "4rem"}} />
 									<span>No pending requests found.</span>
@@ -281,7 +283,8 @@ const Network = () => {
 								<div className="flex flex-row gap-8 items-center">
 									{/* Profile */}
 									<div className="flex-1 min-w-48">
-										<Link to={`/profile/${profile.username}`} className="flex flex-row gap-4 items-center">
+										{/* <Link to={`/profile/${profile.username}`} className="flex flex-row gap-4 items-center"> */}
+										<Link to={`/profile/user/${profile.user_id}`}>
 											<Avatar src={profile.avatar_url} />
 											<div className="flex flex-col items-start">
 												<span>{profile.username}</span>

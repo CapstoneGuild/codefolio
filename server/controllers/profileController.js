@@ -19,7 +19,21 @@ const getProfileByUserId = async (req, res) => {
 
     try {
         const result = await pool.query(
-            `SELECT * FROM profiles WHERE user_id = $1`, [userId]
+            `SELECT
+                p.id,
+                p.user_id,
+                p.bio,
+                p.location,
+                p.github_url,
+                p.linkedin_url,
+                p.other_url,
+                p.created_at,
+                p.is_complete,
+                u.username,
+                u.avatar_url
+            FROM profiles p
+            JOIN users u ON p.user_id = u.id
+            WHERE p.user_id = $1`, [userId]
         );
 
         if (result.rows.length === 0) {

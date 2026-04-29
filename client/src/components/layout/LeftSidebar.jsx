@@ -1,4 +1,5 @@
 import SideMenuItem from "../ui/SideMenuItem"
+import useAuthSession from "../../hooks/useAuthSession";
 
 // icons
 import ArticleIcon from '@mui/icons-material/Article';
@@ -8,11 +9,17 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
 
 const LeftSidebar = () => {
+  const { user: authUser } = useAuthSession();
+
   const menu = [
     { text: 'Projects', icon: <ArticleIcon />, to: '/projects' },
     { text: 'Community', icon: <GroupsIcon />, to: '/community' },
     { text: 'Network', icon: <WifiTetheringIcon />, to: '/network' },
-    { text: 'Bookmarks', icon: <BookmarkIcon />, to: '/bookmarks' },
+    {
+      text: 'Bookmarks',
+      icon: <BookmarkIcon />,
+      to: `/profile/user/${authUser.id}/bookmarks`
+    },
   ]
 
   return (
