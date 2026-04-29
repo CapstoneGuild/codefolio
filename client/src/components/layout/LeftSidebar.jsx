@@ -7,12 +7,16 @@ import Person2Icon from '@mui/icons-material/Person2';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
 
-const LeftSidebar = () => {
+const LeftSidebar = ({ userId }) => {
   const menu = [
     { text: 'Projects', icon: <ArticleIcon />, to: '/projects' },
     { text: 'Community', icon: <GroupsIcon />, to: '/community' },
     { text: 'Network', icon: <WifiTetheringIcon />, to: '/network' },
-    { text: 'Bookmarks', icon: <BookmarkIcon />, to: '/bookmarks' },
+    {
+      text: 'Bookmarks',
+      icon: <BookmarkIcon />,
+      to: userId ? `/profile/user/${userId}/bookmarks` : '/bookmarks',
+    },
   ]
 
   return (

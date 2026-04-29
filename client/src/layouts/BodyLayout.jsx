@@ -1,11 +1,14 @@
 import LeftSidebar from "../components/layout/LeftSidebar"
+import useAuthSession from "../hooks/useAuthSession"
 
 const BodyLayout = ({ element }) => {
+  const { user } = useAuthSession()
+
   return (
     <div className="flex flex-col gap-4 min-h-full items-stretch lg:flex-row">
       {/* Left Sidebar */}
       <aside className="hidden lg:block lg:w-56 shrink-0">
-        <LeftSidebar />
+        <LeftSidebar userId={user?.id} />
       </aside>
 
       {/* Main */}
