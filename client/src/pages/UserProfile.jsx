@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, Outlet, useParams, useLocation } from "react-router-dom";
 import useAuthSession from "../hooks/useAuthSession";
+import profileService from "../services/profileService";
 
 const UserProfile = () => {
   const { id } = useParams();
@@ -12,9 +13,7 @@ const UserProfile = () => {
     //fetch user data, projects, and bookmarks here
     const fetchProfileData = async () => {
       try {
-        // Fetch profile by user_id
-        const profileRes = await fetch(`/api/profiles/user/${id}`);
-        const profile = await profileRes.json();
+        const profile = await profileService.getProfileByUserId(id);
 
         //Combine Github OAuth + profile data => row
         setuser({ gh: authUser, profile });
@@ -29,7 +28,7 @@ const UserProfile = () => {
 
   //Highlight active tab
   const isActive = (path) =>
-    location.pathname === `/profile/${id}${path ? `/${path}` : ""}`;
+    location.pathname === `/profile/user/${id}${path ? `/${path}` : ""}`;
 
   if (!user) return <p>Loading...</p>;
 
