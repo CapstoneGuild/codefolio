@@ -39,6 +39,24 @@ const addComment = async (postId, commentData) => {
     }
 }
 
+const likePost = async (postId) => {
+    try {
+        const response = await post.post(`/${postId}/likes`)
+        return response.data
+    } catch (err) {
+        throw new Error(err.response?.data?.message || 'Unable to like post')
+    }
+}
+
+const unlikePost = async (postId) => {
+    try {
+        const response = await post.delete(`/${postId}/likes`)
+        return response.data
+    } catch (err) {
+        throw new Error(err.response?.data?.message || 'Unable to unlike post')
+    }
+}
+
 const getPostComments = async (postId, limit = 100, offset = 0) => {
     try {
         const response = await post.get(`/${postId}/comments?limit=${limit}&offset=${offset}`)
@@ -63,5 +81,7 @@ export default {
     deletePost,
     addComment,
     getPostComments,
+    likePost,
+    unlikePost,
     searchHashtags
 }
