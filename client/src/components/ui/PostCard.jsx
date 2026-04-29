@@ -22,10 +22,10 @@ const PostCard = ({ post }) => {
 
     const handleToggleComments = async () => {
         setOpenComment((prev) => !prev)
-        if (comments !== null) return
+        if (comments.length > 0) return
         setLoadingComments(true)
         try {
-            const data = await postService.getPostComments(post.id)
+            const data = await postService.getPostComments(post.id, 100, 0)
             setComments(data.comments ?? data)
         } catch (err) {
             notifyError(err.message)
@@ -51,10 +51,9 @@ const PostCard = ({ post }) => {
             <div className='p-6'>
                 <div className='flex items-center justify-between gap-3'>
                     <div className='flex items-center gap-2.5'>
-                        <Link to="/profile"><Avatar src={post.avatar_url} sx={{ width: 48, height: 48 }} /></Link>
+                        <Link to={`/profile/user/${post.user_id}`}><Avatar src={post.avatar_url} sx={{ width: 48, height: 48 }} /></Link>
                         <div className='leading-tight'>
                             <h1 className='body-sm text-sm font-semibold'>{post.username}</h1>
-                            <p className='body-sm text-xs'>@janedoe</p>
                             <span className='caption text-muted text-xs'>{formatDate(post.created_at)}</span>
                         </div>
                     </div>
@@ -116,9 +115,13 @@ const PostCard = ({ post }) => {
 
                     {!loadingComments && comments?.map((c) => (
                         <div key={c.id} className='flex gap-2.5'>
-                            <Link to="/profile">
+                            {c.author?.user_id ? (
+                                <Link to={`/profile/user/${c.author.user_id}`}>
+                                    <Avatar src={c.author?.avatar_url} sx={{ width: 28, height: 28 }} />
+                                </Link>
+                            ) : (
                                 <Avatar src={c.author?.avatar_url} sx={{ width: 28, height: 28 }} />
-                            </Link>
+                            )}
                             <div className='flex flex-col leading-tight'>
                                 <div className='flex items-baseline gap-1.5'>
                                     <span className='text-sm font-semibold text-app'>{c.author?.username}</span>
