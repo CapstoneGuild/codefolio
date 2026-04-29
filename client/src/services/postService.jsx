@@ -39,9 +39,9 @@ const addComment = async (postId, commentData) => {
     }
 }
 
-const getPostComments = async (postId) => {
+const getPostComments = async (postId, limit = 100, offset = 0) => {
     try {
-        const response = await post.get(`/${postId}/comments`)
+        const response = await post.get(`/${postId}/comments?limit=${limit}&offset=${offset}`)
         return response.data
     } catch (err) {
         throw new Error(err.response?.data?.message || 'Unable to fetch comments')
